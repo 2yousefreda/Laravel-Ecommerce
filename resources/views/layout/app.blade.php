@@ -17,19 +17,19 @@
 	<!-- fontawesome -->
 	<link rel="stylesheet" href="assets/css/all.min.css">
 	<!-- bootstrap -->
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
 	<!-- owl carousel -->
-	<link rel="stylesheet" href="assets/css/owl.carousel.css">
+	<link rel="stylesheet" href="{{asset('assets/css/owl.carousel.css')}}">
 	<!-- magnific popup -->
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
+	<link rel="stylesheet" href="{{asset('assets/css/magnific-popup.css')}}">
 	<!-- animate css -->
-	<link rel="stylesheet" href="assets/css/animate.css">
+	<link rel="stylesheet" href="{{asset('assets/css/animate.css')}}">
 	<!-- mean menu css -->
-	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+	<link rel="stylesheet" href="{{asset('assets/css/meanmenu.min.css')}}">
 	<!-- main style -->
-	<link rel="stylesheet" href="assets/css/main.css">
+	<link rel="stylesheet" href="{{asset('assets/css/main.css')}}">
 	<!-- responsive -->
-	<link rel="stylesheet" href="assets/css/responsive.css">
+	<link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
 
 </head>
 <body>
@@ -63,7 +63,7 @@
 								<li><a href="{{route('product')}}">Products</a></li>
 								<li><a href="{{route('about')}}">About</a></li>
 								<li><a href="{{route('contact')}}">Contact</a></li>
-								<li><a href="{{route('shop')}}">Shop</a>
+								<li><a href="{{route('category')}}">Shop</a>
 									<ul class="sub-menu">
 										<li><a href="shop.html">Shop</a></li>
 										<li><a href="checkout.html">Check Out</a></li>
@@ -166,7 +166,7 @@
                     <ul>
                         <li><a href="{{route('welcome')}}">Home</a></li>
                         <li><a href="{{route('about')}}">About</a></li>
-                        <li><a href="{{route('shop')}}">Shop</a></li>
+                        <li><a href="{{route('category')}}">Shop</a></li>
                         <li><a href="{{route('contact')}}contact">Contact</a></li>
                     </ul>
                 </div>
@@ -211,25 +211,25 @@
 </div>
 
     	<!-- jquery -->
-	<script src="assets/js/jquery-1.11.3.min.js"></script>
+	<script src=" {{asset('assets/js/jquery-1.11.3.min.js')}} "></script>
 	<!-- bootstrap -->
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+	<script src=" {{asset('assets/bootstrap/js/bootstrap.min.js')}} "></script>
 	<!-- count down -->
-	<script src="assets/js/jquery.countdown.js"></script>
+	<script src=" {{asset('assets/js/jquery.countdown.js')}} "></script>
 	<!-- isotope -->
-	<script src="assets/js/jquery.isotope-3.0.6.min.js"></script>
+	<script src=" {{asset('assets/js/jquery.isotope-3.0.6.min.js')}} "></script>
 	<!-- waypoints -->
-	<script src="assets/js/waypoints.js"></script>
+	<script src=" {{asset('assets/js/waypoints.js')}} "></script>
 	<!-- owl carousel -->
-	<script src="assets/js/owl.carousel.min.js"></script>
+	<script src=" {{asset('assets/js/owl.carousel.min.js')}} "></script>
 	<!-- magnific popup -->
-	<script src="assets/js/jquery.magnific-popup.min.js"></script>
+	<script src=" {{asset('assets/js/jquery.magnific-popup.min.js')}} "></script>
 	<!-- mean menu -->
-	<script src="assets/js/jquery.meanmenu.min.js"></script>
+	<script src=" {{asset('assets/js/jquery.meanmenu.min.js')}} "></script>
 	<!-- sticker js -->
-	<script src="assets/js/sticker.js"></script>
+	<script src=" {{asset('assets/js/sticker.js')}} "></script>
 	<!-- main js -->
-	<script src="assets/js/main.js"></script>
+	<script src=" {{asset('assets/js/main.js')}} "></script>
 
 </body>
 </html>

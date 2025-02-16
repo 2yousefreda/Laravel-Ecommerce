@@ -2,30 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
+use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class categoryController extends Controller
 {
     public function index(){
-       $result= DB::table("categories")->get();
-    //    dd($result);
+       $result= category::all();
+   
         return view("welcome",["categories"=> $result]);
     }
-    public function show($categoryId){
+    public function show(){
 
         
-            $result= DB::table("products")->where('category_id',$categoryId)->get();
+            $categories= category::all();
+            $products= product::all();
         
-        // dd($result);
-        return view("shop",["products"=> $result]);
+        
+        return view("category",["categories"=> $categories,"products"=> $products]);
     }
-    public function showAll(){
-        
-        $result= DB::table("products")->get();
+    public function categoryProducts($catId){
+
+        $products=product::where("category_id",$catId)->get();
             
-        return view("shop",["products"=> $result]);
+        
+        return view("product",["products"=> $products]);
     }
+ 
   
         
     

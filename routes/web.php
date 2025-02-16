@@ -15,10 +15,10 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/shop', [categoryController::class,'showAll'])->name('shop');
+Route::get('/category', [categoryController::class,'show'])->name('category');
 
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-Route::get('/shop/category/{categoryId}',[categoryController::class,'show'])->name('category.shop');
+Route::get('product/{catId}',[categoryController::class,'categoryProducts'])->name('category.product');
