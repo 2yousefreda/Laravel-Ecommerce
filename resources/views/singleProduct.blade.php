@@ -3,6 +3,9 @@
 @section('title') {{$product->name}} @endsection
 	
 @section('content')
+        <?php
+            $path=Storage::url($product->imagepath)
+          ?>
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
@@ -24,7 +27,7 @@
         <div class="row">
             <div class="col-md-5">
                 <div class="single-product-img">
-                    <img src="{{asset($product->imagepath)}}" alt="">
+                    <img src="{{$path}}" alt="">
                 </div>
             </div>
             <div class="col-md-7">
@@ -59,10 +62,13 @@
         </div>
         <div class="row">
             @foreach ($related as $product )  
+            <?php
+            $path=Storage::url($product->imagepath)
+          ?>
             <div class="col-lg-4 col-md-6 text-center">
                 <div class="single-product-item">
                     <div class="product-image">
-                        <a href="{{route('product.show',$product->id)}}"><img style="max-height: 250px; min-height: 250px;" src="{{asset($product->imagepath)}}" alt=""></a>
+                        <a href="{{route('product.show',$product->id)}}"><img style="max-height: 250px; min-height: 250px;" src="{{$path}}" alt=""></a>
                     </div>
                     <h3>{{$product->name}}</h3>
                     <p class="product-price"><span>Per Kg</span> {{$product->price}}$ </p>

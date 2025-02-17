@@ -33,34 +33,34 @@
                
                  <div id="form_status"></div>
                 <div class="contact-form">
-                    <form method="post" action="{{route('product.store')}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('product.update',$product->id)}}" enctype="multipart/form-data">
                         @csrf
-                        
+                        @method('PUT')
                         <p>
-                            <input type="text" placeholder="Name" value="{{old('name')}}" name="name" style="width: 100%" >
+                            <input type="text" placeholder="Name" value="{{$product->name}}" name="name" style="width: 100%" >
                             <div class="input-group mb-3">
                                 <input type="file" name="imagepath" class="form-control" >
-                                <label class="input-group-text" for="imagepath">Upload</label>
+                                <label class="input-group-text"   for="imagepath">Upload</label>
                               </div>
                            
                         </p>
                         <div class="input-group mb-3">
                             <span class="input-group-text">$</span>
                             <span class="input-group-text">Price</span>
-                            <input type="text" value="{{old('price')}}"  name="price" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
+                            <input type="text" value="{{$product->price}}"  name="price" class="form-control" aria-label="Dollar amount (with dot and two decimal places)">
                           </div>
                           <p>
-                            <input type="number" value="{{old(key: 'quantity')}}" placeholder="quantity" name="quantity" > quantity
+                            <input type="number" value="{{$product->quantity}}" placeholder="quantity" name="quantity" > quantity
                           </p>
                         <div class="mb-3">
                             Category
-                            <select name="category_id" value="{{old('category_id')}}" class="form-control" style="width: 50%"> 
+                            <select name="category_id" class="form-control" style="width: 50%"> 
                               @foreach ($categories as $category )
                                 <option value="{{$category->id}}">{{$category->name}}</option>
                               @endforeach
                             </select>
                           </div>
-                        <p><textarea name="description" value="{{old('description')}}" id="message" cols="30" rows="10" placeholder="description"></textarea></p>
+                        <p><textarea name="description"  id="message" cols="30" rows="10" placeholder="description">{{$product->description}}</textarea></p>
                         <p><input type="submit" value="Add"></p>
                     </form>
                 </div>
