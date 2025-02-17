@@ -26,7 +26,7 @@
             <div class="col-lg-4 col-md-6 text-center  {{$product->category_id}}">
                 <div class="single-product-item shadow p-3 mb-5 bg-body-tertiary rounded">
                     <div class="product-image">
-                        <a href="single-product.html"><img style="max-height: 250px; min-height: 250px;" src="{{asset($product->imagepath) }}" alt=""></a>
+                        <a href="{{route('product.show',$product->id)}}"><img style="max-height: 250px; min-height: 250px;" src="{{asset($product->imagepath) }}" alt=""></a>
                     </div>
                     <h3>{{$product->name}}</h3>
                     <p class="product-price"><span>Per Kg</span> {{$product->price}}$ </p>

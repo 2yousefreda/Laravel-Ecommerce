@@ -10,12 +10,12 @@
 	<title>@yield('title')</title>
 
 	<!-- favicon -->
-	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
+	<link rel="shortcut icon" type="image/png" href="{{asset('assets/img/favicon.png')}}">
 	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="{{url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700')}}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
 	<!-- fontawesome -->
-	<link rel="stylesheet" href="assets/css/all.min.css">
+	<link rel="stylesheet" href="{{asset('assets/css/all.min.css')}}">
 	<!-- bootstrap -->
 	<link rel="stylesheet" href="{{asset('assets/bootstrap/css/bootstrap.min.css')}}">
 	<!-- owl carousel -->
@@ -51,7 +51,7 @@
 						<!-- logo -->
 						<div class="site-logo">
 							<a href="{{route('welcome')}}">
-								<img src="assets/img/logo.png" alt="">
+								<img src="{{asset('assets/img/logo.png')}}" alt="">
 							</a>
 						</div>
 						<!-- logo -->
@@ -60,12 +60,12 @@
 						<nav class="main-menu">
 							<ul>
 								<li class="current-list-item"><a href="{{route('welcome')}}">Home</a></li>
-								<li><a href="{{route('product')}}">Products</a></li>
+							
 								<li><a href="{{route('about')}}">About</a></li>
 								<li><a href="{{route('contact')}}">Contact</a></li>
 								<li><a href="{{route('category')}}">Shop</a>
 									<ul class="sub-menu">
-										<li><a href="shop.html">Shop</a></li>
+										<li><a href="{{route('category')}}">Shop</a></li>
 										<li><a href="checkout.html">Check Out</a></li>
 										<li><a href="single-product.html">Single Product</a></li>
 										<li><a href="cart.html">Cart</a></li>
@@ -119,19 +119,19 @@
             <div class="col-lg-12">
                 <div class="logo-carousel-inner">
                     <div class="single-logo-item">
-                        <img src="assets/img/company-logos/1.png" alt="">
+                        <img src="{{asset('assets/img/company-logos/1.png')}}" alt="">
                     </div>
                     <div class="single-logo-item">
-                        <img src="assets/img/company-logos/2.png" alt="">
+                        <img src="{{asset('assets/img/company-logos/2.png')}}" alt="">
                     </div>
                     <div class="single-logo-item">
-                        <img src="assets/img/company-logos/3.png" alt="">
+                        <img src="{{asset('assets/img/company-logos/3.png')}}" alt="">
                     </div>
                     <div class="single-logo-item">
-                        <img src="assets/img/company-logos/4.png" alt="">
+                        <img src="{{asset('assets/img/company-logos/4.png')}}" alt="">
                     </div>
                     <div class="single-logo-item">
-                        <img src="assets/img/company-logos/5.png" alt="">
+                        <img src="{{asset('assets/img/company-logos/5.png')}}" alt="">
                     </div>
                 </div>
             </div>

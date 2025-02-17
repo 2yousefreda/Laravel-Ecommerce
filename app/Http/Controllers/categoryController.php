@@ -23,6 +23,8 @@ class categoryController extends Controller
         
         return view("category",["categories"=> $categories,"products"=> $products]);
     }
+
+    
     public function categoryProducts($catId){
 
         $products=product::where("category_id",$catId)->get();
