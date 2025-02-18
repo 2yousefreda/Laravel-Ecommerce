@@ -15,7 +15,7 @@ class categoryController extends Controller
         return view("welcome",["categories"=> $result]);
     }
     public function show(){
-
+        
         
             $categories= category::all();
             $products= product::all();
@@ -25,12 +25,12 @@ class categoryController extends Controller
     }
 
     
-    public function categoryProducts($catId){
+    public function singleCategory($catId){
 
         $products=product::where("category_id",$catId)->get();
             
         
-        return view("product",["products"=> $products]);
+        return view("singleCategory",["products"=> $products]);
     }
  
   

@@ -1,8 +1,8 @@
+
 @extends('layout.app')
-@section('title') categoty @endsection
+@section('title') Shop @endsection
 	
 @section('content')
-
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
@@ -20,27 +20,10 @@
 <!-- products -->
 <div class="product-section mt-150 mb-150">
     <div class="container">
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="product-filters">
-                    <ul>
-                        <li class="active"  data-filter="*">All</li>
-                        @foreach ($categories as $category )
-                            
-                        <li  data-filter=".{{$category->id}}">{{$category->name}}</li>
-                        
-                        @endforeach
-                        
-                    </ul>
-                </div>
-            </div>
-        </div>
-
         <div class="row product-lists">
             @foreach ($products as $product)
             <?php
-            $path=Storage::url($product->imagepath)
+                $path=Storage::url($product->imagepath)
             ?>
                 
                 <div class="col-lg-4 col-md-6 text-center  {{$product->category_id}}">
