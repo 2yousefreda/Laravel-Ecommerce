@@ -12,6 +12,7 @@ class order extends Model
         'phone',
         'total_price',
         'address',
+        'description',
         'cart_items',
 
     ] ;

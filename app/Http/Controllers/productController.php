@@ -110,4 +110,12 @@ class productController extends Controller
         
         return to_route('product.index');
     }
+    protected static function decreaseQuantity($productId,$quantity){
+
+        $product=Product::find($productId);
+        $newQuantity=$product->quantity-$quantity;
+        $product->update([
+            'quantity'=>$newQuantity
+        ]);    
+    }
 }

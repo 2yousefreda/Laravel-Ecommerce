@@ -2,83 +2,74 @@
 
 namespace App\Http\Controllers;
 use App\Models\cart;
+use App\Models\product;
 use App\Models\order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use PHPUnit\Framework\Attributes\RequiresSetting;
 
-class oredrController extends Controller
+class oredrController extends productController
 {
     public function index(){
         return "order index";
     }
-    public function show(){
+    public function show($id){
         return "show order";
     }
     
+   
     public function create(){
-        $isempty=cart::first();
+        
+        request()->validate([
+            "totalPrice"=> ['gt:0']
+        ],[
+            'totalPrice.gt'=> 'Your cart is empty'
+        ]);
+        $isEmpty=request()->isEmpty;
+        
         $order=  cart::all();
-        return view("checkout",['orders'=>$order,'isEmpty'=>$isempty]);
+        $suptotal=request()->suptotal;
+        $shipping=request()->shipping;
+        $totalPrice=request()->totalPrice;
+        
+        return view("checkout",['orders'=>$order,'isEmpty'=>$isEmpty,'suptotal'=> $suptotal,'shipping'=>$shipping,'totalPrice'=>$totalPrice]);
     }
+    
     public function store(){
         
-        
+        // @dd(request()->description);
         request()->validate([
             'name'=> ['required'],
             'email'=> ['required',Rule::email()],
             'address'=> ['required'],
             'phone'=> ['required'],
+            'totalPrice'=> ['gt:0'],
+        ],[
+            'totalPrice.gt'=> 'Your cart is Empty '
         ]);
 
         $cartItems= cart::all();
-        $validelEment=[];
-      
-       $totalPrice=0;
-        foreach ($cartItems as $item) {
-         
-            $found = false;
-          
-           
-            
-
-                foreach ($validelEment as &$existingItem) {
-                    if ($existingItem['product_id'] == $item['product_Id']) {
-                        $existingItem['quantity'] += $item['quantity'];
-                        $found = true;
-                        break;
-    
-                    }
-                    
-                }
-            
-              if (!$found) {
-                    $validelEment[] = [
-                        'product_id' => $item['product_Id'],
-                        'product_name' => $item['product_Name'],
-                        'product_Price' => $item['product_Price'],
-                        'quantity' => $item['quantity'],
-                    ];
-                }
-                $totalPrice += $item['total_Price'];
-           
-        }
-        $jsonProducts   = json_encode($validelEment);
+        $filterdElement=[];
         
-        $totalPrice+=request()->shipping;
+        foreach ($cartItems as $item) {
+            $filterdElement[]=[
+                'product_id'=> $item['product_Id'],
+                'product_name'=> $item['product_Name'],
+                'product_price'=> $item['product_Price'],
+                'quantity'=> $item['quantity'],
+            ];
+            productController::decreaseQuantity($item['product_Id'],$item['quantity']);
+        }
+        $jsonProducts   = json_encode($filterdElement);
         order::create([
             'name'=> request()->name,
             'email'=> request()->email,
             'address'=> request()->address,
             'phone'=> request()->phone,
             'description'=> request()->description,
+            'total_price'=> request()->totalPrice,
             'cart_items'=> $jsonProducts,
-            'total_price'=> $totalPrice,
         ]);
-        
-       
-
-        
         return to_route('cart.destroyAll');
     }
 }

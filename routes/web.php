@@ -19,7 +19,6 @@ Route::get('/contact', function () {
 
 
 Route::get('/cart', [cartController::class,'index'])->name('cart.index');
-Route::get('/cart/destroyall', [cartController::class,'destroyAll'])->name('cart.destroyAll');
 
 
 
@@ -47,4 +46,5 @@ Route::get('/product/{product}/edit', [productController::class,'edit'])->name('
 Route::delete('/product/{product}', [productController::class,'destroy'])->name('product.destroy');
 
 
+Route::get('/cart/destroyall', [cartController::class,'destroyAll'])->name('cart.destroyAll');
 Route::delete('/cart/{productId}', [cartController::class,'destroy'])->name('cart.destroy');

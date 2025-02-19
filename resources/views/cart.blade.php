@@ -1,11 +1,7 @@
 @extends('layout.app')
 @section('title') Shop @endsection
 @section('content')
-        @php
-            $subtotal=0;
-            empty($isEmpty)?$shipping=0:$shipping=45;
-            $total=0;
-        @endphp
+    
        
 <!-- breadcrumb-section -->
 <div class="breadcrumb-section breadcrumb-bg">
@@ -29,8 +25,9 @@
             <div class="col-lg-8 col-md-12">
                 <div class="cart-table-wrap">
                     <table class="cart-table">
-                        <thead class="cart-table-head">
+                        <thead class="cart-table-head" >
                             <tr class="table-head-row">
+                                <a href="{{route('cart.destroyAll')}}" class="boxed-btn black">Clear Cart</a>
                                 <th class="product-remove"></th>
                                 <th class="product-image">Product Image</th>
                                 <th class="product-name">Name</th>
@@ -40,34 +37,38 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($products as  $product)
-                            <?php
-                                $iamge_Path=Storage::url($product->image_Path)
-                            ?>
-                            <tr class="table-body-row">
-                                <form  method="POST" action="{{route('cart.destroy',$product->id)}}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <td class="product-remove"><button type="submit" style="border-style: none;"> <i class="far fa-window-close"></i></button></td>
-                                </form>
-                                <td class="product-image"><img src="{{($iamge_Path)}}" alt=""></td>
-                                <td class="product-name">{{$product->product_Name}}</td>
-                                <td class="product-price">${{$product->product_Price}}</td>
-                                <td class="product-quantity"><p>{{$product->quantity}}</p></td>
-                                <td class="product-total">{{$product->total_Price}}</td>
-                            </tr>
-                            @php
+                            @if (!$isEmpty)
                                 
-                                $subtotal+=$product->total_Price;
-                                $total=($subtotal+$shipping);
-                            @endphp
-                            @endforeach
+                                @foreach ($products as  $product)
+                                @php
+                                    $iamge_Path=Storage::url($product->image_Path)
+                                @endphp
+                                <tr class="table-body-row">
+                                    <form  method="POST" action="{{route('cart.destroy',$product->id)}}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <td class="product-remove"><button type="submit" style="border-style: none;"> <i class="far fa-window-close"></i></button></td>
+                                    </form>
+                                    <td class="product-image"><img src="{{($iamge_Path)}}" alt=""></td>
+                                    <td class="product-name">{{$product->product_Name}}</td>
+                                    <td class="product-price">${{$product->product_Price}}</td>
+                                    <td class="product-quantity"><p>{{$product->quantity}}</p></td>
+                                    <td class="product-total">{{$product->total_Price}}</td>
+                                </tr>
+                                @endforeach
+                                
+                            @endif
                            
                         </tbody>
                     </table>
+                    @if ($isEmpty)
+                        
+                    <div class="mt-5" style="width: 100%; display: flex; justify-content: center;">
+                        <h1>EMPTY</h1>
+                    </div>
+                    @endif
                 </div>
             </div>
-
             <div class="col-lg-4">
                 <div class="total-section">
                     <table class="total-table">
@@ -78,6 +79,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @error('totalPrice')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                             <tr class="total-data">
                                 <td><strong>Subtotal: </strong></td>
                                 <td>${{$subtotal}}</td>
@@ -88,12 +92,12 @@
                             </tr>
                             <tr class="total-data">
                                 <td><strong>Total: </strong></td>
-                                <td>${{$total}}</td>
+                                <td>${{$totalPrice}}</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="cart-buttons" style="display: flex; align-items:center; justify-content: center;">
-                        <a href="{{route('order.create')}}" class="boxed-btn black">Check Out</a>
+                        <a href="{{route('order.create',['isEmpty'=>$isEmpty,'suptotal'=>$subtotal,'shipping'=>$shipping,'totalPrice'=>$totalPrice])}}" class="boxed-btn black">Check Out</a>
                     </div>
                 </div>
 

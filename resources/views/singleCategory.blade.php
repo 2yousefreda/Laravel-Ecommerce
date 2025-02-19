@@ -20,11 +20,23 @@
 <!-- products -->
 <div class="product-section mt-150 mb-150">
     <div class="container">
+        {{-- @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                 @endif --}}
+                 <?php
+                 if(session('error')){
+
+                      $msg =session('error') ;
+                      echo "<script type='text/javascript'>alert('$msg');</script>";
+                 }
+                 ?>
         <div class="row product-lists">
             @foreach ($products as $product)
-            <?php
+            @php
                 $path=Storage::url($product->imagepath)
-            ?>
+            @endphp
                 
                 <div class="col-lg-4 col-md-6 text-center  {{$product->category_id}}">
                     <div class="single-product-item shadow p-3 mb-5 bg-body-tertiary rounded">

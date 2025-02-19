@@ -1,15 +1,8 @@
 
 
 @extends('layout.app')
-@section('title') categoty @endsection
-	
+@section('title') Chickout @endsection
 @section('content')
-
-@php
-$suptotal=0;
-empty($isEmpty)?$shipping=0:$shipping=45;
-
-@endphp
 <!-- breadcrumb-section -->
 <div class="breadcrumb-section breadcrumb-bg">
     <div class="container">
@@ -44,23 +37,25 @@ empty($isEmpty)?$shipping=0:$shipping=45;
                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                           <div class="card-body">
                             <div class="billing-address-form">
-                                @if ($errors->any())
-                                    <div class="alert alert-danger">
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endif
+                              @if ($errors->any())
+                              <div class="alert alert-danger">
+                                  <ul>
+                                      @foreach ($errors->all() as $error)
+                                          <li>{{ $error }}</li>
+                                      @endforeach
+                                  </ul>
+                              </div>
+                          @endif
+                         
                                 <form id="orderForm" method="POST" action="{{route('order.store')}}">
                                     @csrf
                                     <p><input type="text" name="name" placeholder="Name"></p>
                                     <p><input type="email" name="email" placeholder="Email"></p>
                                     <p><input type="text" name="address" placeholder="Address"></p>
                                     <p><input type="tel" name="phone" placeholder="Phone"></p>
-                                    <p><textarea name="description" id="bill" cols="30" rows="10" placeholder="Say Something"></textarea></p>
+                                    <p><textarea name="description"  cols="30" rows="10" placeholder="Say Something"></textarea></p>
                                     <input type="hidden" name="shipping" value="{{$shipping}}">
+                                    <input type="hidden" name="totalPrice" value="{{$totalPrice}}">
                                 </form>
                             </div>
                           </div>
@@ -105,6 +100,9 @@ empty($isEmpty)?$shipping=0:$shipping=45;
            
             <div class="col-lg-4">
                 <div class="order-details-wrap">
+                  @error('totalPrice')
+                  <div class="alert alert-danger">{{ $message }}</div>
+              @enderror
                     <table class="order-details">
                         <thead>
                             <tr>
@@ -123,10 +121,7 @@ empty($isEmpty)?$shipping=0:$shipping=45;
                                 <td>{{$order->product_Name}}</td>
                                 <td>${{$order->total_Price}}</td>
                             </tr>
-                                @php
-                                    $suptotal+=$order->total_Price;
-                                    $total=$suptotal+$shipping;
-                                @endphp
+                            
                             @endforeach
                             
                         </tbody>
@@ -141,7 +136,7 @@ empty($isEmpty)?$shipping=0:$shipping=45;
                             </tr>
                             <tr>
                                 <td>Total</td>
-                                <td>${{$total}}</td>
+                                <td>${{$totalPrice}}</td>
                             </tr>
                         </tbody>
                     </table>
