@@ -20,7 +20,8 @@
 <!-- products -->
 <div class="product-section mt-150 mb-150">
     <div class="container">
-
+        @if ($categories!=null)
+            
         <div class="row">
             <div class="col-md-12">
                 <div class="product-filters">
@@ -36,6 +37,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         {{-- @if(session('error'))
             <div class="alert alert-danger">
@@ -55,24 +57,30 @@
                 
                 $path=Storage::url($product->imagepath)
             @endphp
-            
-                
-                <div class="col-lg-4 col-md-6 text-center  {{$product->category_id}}">
-                    <div class="single-product-item shadow p-3 mb-5 bg-body-tertiary rounded">
-                        <div class="product-image">
-                            <a href="{{route('product.show',$product->id)}}"><img style="max-height: 250px; min-height: 250px;" src="{{ $path}}" alt=""></a>
-                        </div>
-                        <h3>{{$product->name}}</h3>
-                        <p class="product-price"><span>Per Kg</span> {{$product->price}}$ </p>
-                        <p class="product-quantity"><span>Quantity:</span> {{$product->quantity}} </p>
-
-                        <form method="POST" action="{{route('cart.store',[$product->id,'quantity'=>1]) }}">
-                            @csrf
-                        
-                        <input type="submit" value="Add to Cart"  class="cart-btn" ><i class="fas fa-shopping-cart"></i> </input>
-                    </form>
+            @if ($product->quantity>=0)
+            <div class="col-lg-4 col-md-6 text-center  {{$product->category_id}}">
+                <div class="single-product-item shadow p-3 mb-5 bg-body-tertiary rounded">
+                    <div class="product-image">
+                        <a href="{{route('product.show',$product->id)}}"><img style="max-height: 250px; min-height: 250px;" src="{{ $path}}" alt=""></a>
                     </div>
+                    <h3>{{$product->name}}</h3>
+                    <p class="product-price"><span>Per Kg</span> {{$product->price}}$ </p>
+                    @if($product->quantity==0)
+                    <p class="product-quantity"><span>Quantity:</span> out of stock </p>
+                    @else
+                    <p class="product-quantity"><span>Quantity:</span> {{$product->quantity}} </p>
+
+                    @endif
+                    <form method="POST" action="{{route('cart.store',[$product->id,'quantity'=>1]) }}">
+                        @csrf
+                    
+                    <input type="submit" value="Add to Cart"  class="cart-btn" ><i class="fas fa-shopping-cart"></i> </input>
+                </form>
                 </div>
+            </div>
+                
+            @endif
+                
             @endforeach
         
     </div>

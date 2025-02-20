@@ -1,6 +1,6 @@
 
 @extends('layout.app')
-@section('title') Shop @endsection
+@section('title') index product @endsection
 @section('content')
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
@@ -27,9 +27,11 @@
         
         <div class="row product-lists">
             @foreach ($products as $product)
-            <?php
-                $path=Storage::url($product->imagepath)
-            ?>
+            @php
+            
+            $path=Storage::url($product->imagepath)
+            @endphp
+        
                 
             <div class="col-lg-4 col-md-6 text-center  {{$product->category_id}}">
                 <div class="single-product-item shadow p-3 mb-5 bg-body-tertiary rounded">
@@ -38,7 +40,12 @@
                     </div>
                     <h3>{{$product->name}}</h3>
                     <p class="product-price"><span>Per Kg</span> {{$product->price}}$ </p>
-                    <p class="product-quantity"><span>Quantity:</span> {{$product->quantity}} </p>
+                    <form method="POST" action="{{route('product.updateQuantity')}}" style=" display: inline">
+                        @csrf
+                        <input type="hidden" value="{{$product->id}}" name="productId">
+                        <p class="product-quantity"><span>Quantity:</span><input type="number" name="quantity" value="{{$product->quantity}}">  <button type="submit" class="btn btn-primary ml-3" >set</button></p>
+                        
+                    </form>
                     <a class="btn btn-info" href="{{route('product.show',$product->id)}}">View</a>
                     <a class="btn btn-primary" href="{{route('product.edit',$product->id)}}">Edit</a>
                     <form method="POST" action="{{route('product.destroy',$product->id)}}" style=" display: inline">
@@ -46,6 +53,7 @@
                         @method('DELETE')
                       <button type="submit" class="btn btn-danger " >Delete</button>
                     </form>
+                  
                 </div>
             </div>
             @endforeach

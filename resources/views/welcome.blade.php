@@ -124,11 +124,15 @@
 
 			<div class="row">
                 @foreach ($categories as $category )
-					
+				
+                @php
+                
+                $path=Storage::url($category->imagepath)
+                @endphp
                     <div class="col-lg-4 col-md-6 text-center ">
 					<div class="single-product-item shadow p-3 mb-5 bg-body-tertiary rounded">
 						<div class="product-image ">
-							<a href="{{route('category.product',$category->id)}}"><img src="{{$category->imagepath}}" alt=""></a>
+							<a href="{{route('category.product',$category->id)}}"><img src="{{url( $path)}}" alt=""></a>
 						</div>
 						<h3>{{$category->name}}</h3>
                         <p>{{$category->description}}</p>

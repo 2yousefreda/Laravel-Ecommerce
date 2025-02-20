@@ -6,6 +6,7 @@ use App\Models\category;
 use App\Models\product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PHPUnit\Framework\Attributes\RequiresSetting;
 
 class productController extends Controller
 {
@@ -49,13 +50,13 @@ class productController extends Controller
         ]);
         
         
-        return to_route('product.create');
+        return to_route('product.index');
     }
 
 
-    public function show($prodId){
+    public function show($productId){
 
-        $product= product::findOrFail($prodId );
+        $product= product::findOrFail($productId );
         $categoryName=category::where("id",$product->category_id)->value('name');
         
         $relatedProducts=product::where("category_id",$product->category_id)->get();
@@ -103,13 +104,14 @@ class productController extends Controller
         
         return to_route('product.index');
     }
-    public function destroy($product){
-        $product=product::findOrFail($product);
+    public function destroy($productId){
+        $product=product::findOrFail($productId);
         Storage::disk('public')->delete( $product->imagepath);
         $product->delete();
         
         return to_route('product.index');
     }
+   
     protected static function decreaseQuantity($productId,$quantity){
 
         $product=Product::find($productId);
@@ -117,5 +119,13 @@ class productController extends Controller
         $product->update([
             'quantity'=>$newQuantity
         ]);    
+    }
+    public  function updateQuantity(){
+        $product=Product::findOrFail(request()->productId);
+        $newQuantity=request()->quantity;
+        $product->update([
+            'quantity'=>$newQuantity
+        ]);   
+        return redirect()->back(); 
     }
 }

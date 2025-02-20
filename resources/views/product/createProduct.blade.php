@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title') Shpo @endsection
+@section('title') Add product @endsection
 	
 @section('content')
 <!-- breadcrumb-section -->
@@ -9,7 +9,7 @@
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
                    
-                    <h1>Add Item</h1>
+                    <h1>Add Product</h1>
                 </div>
             </div>
         </div>
@@ -33,9 +33,9 @@
                
                  <div id="form_status"></div>
                 <div class="contact-form">
-                    <form method="post" action="{{route('product.store')}}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('product.store')}}" enctype="multipart/form-data">
                         @csrf
-                        @method('PUT')
+                    
                         <p>
                             <input type="text" placeholder="Name" value="{{old('name')}}" name="name" style="width: 100%" >
                             <div class="input-group mb-3">
@@ -68,7 +68,5 @@
         </div>
     </div>
 </div>
-
-
 <!-- end contact form -->
 @endsection

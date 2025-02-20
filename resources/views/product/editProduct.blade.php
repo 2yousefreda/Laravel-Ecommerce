@@ -1,5 +1,5 @@
 @extends('layout.app')
-@section('title') Shpo @endsection
+@section('title') Edit @endsection
 	
 @section('content')
 <!-- breadcrumb-section -->
@@ -9,7 +9,7 @@
             <div class="col-lg-8 offset-lg-2 text-center">
                 <div class="breadcrumb-text">
                    
-                    <h1>Add Item</h1>
+                    <h1>Edit product</h1>
                 </div>
             </div>
         </div>

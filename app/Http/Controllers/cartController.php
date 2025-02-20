@@ -30,9 +30,13 @@ class cartController extends Controller
         $Data=['productQuantity'=>$productQuanity,'quantityInCart'=>$quantityInCart];
         // $Data['productQuantity']=$prod;
 
-        $cata=['quantityInCart'=>'min:1|lte:productQuantity'];
+        $rules=['quantityInCart'=>'min:1|lte:productQuantity'];
+        $ErrorMessage=['quantityInCart.lte'=> 'you must not buy greater than '. $productQuanity];
+        if($productQuanity==0){
+            $ErrorMessage['quantityInCart.lte']="out of stock";
+        }
        
-        $val=Validator::make($Data, $cata,['quantityInCart.lte'=> 'The quantity in stock has been exceeded '. $productQuanity]);
+        $val=Validator::make($Data, $rules, $ErrorMessage);
         
             
             return $val;

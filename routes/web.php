@@ -7,7 +7,7 @@ use App\Http\Controllers\productController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
-Route::get('/', [categoryController::class,'index'])->name('welcome');
+Route::get('/', [categoryController::class,'showWelcome'])->name('welcome');
 
 Route::get('/about', function () {
     return view('about');
@@ -18,10 +18,14 @@ Route::get('/contact', function () {
 
 
 
+Route::get('/indexcategory', [categoryController::class,'index'])->name('category.index');
+Route::get('/createcategory', [categoryController::class,'create'])->name('category.create');
+Route::post('/storecategory', [categoryController::class,'store'])->name('category.store');
+Route::get('/category/{categoryId}/edit', [categoryController::class,'edit'])->name('category.edit');
+Route::put('/category/{categoryId}', [categoryController::class,'update'])->name('category.update');
+Route::delete('/categorydestroy/{categoryId}', [categoryController::class,'destroy'])->name('category.destroy');
+
 Route::get('/cart', [cartController::class,'index'])->name('cart.index');
-
-
-
 Route::get('/category', [categoryController::class,'show'])->name('category');
 
 
@@ -33,10 +37,11 @@ route::post('/checkout', [oredrController::class,'store'])->name('order.store');
 Route::get('/index', [productController::class,'index'])->name('product.index');
 Route::get('/createproduct', [productController::class,'create'])->name('product.create');
 Route::post('/storeproduct', [productController::class,'store'])->name('product.store');
+Route::post('/updateQuantity', [productController::class,'updateQuantity'])->name('product.updateQuantity');
 
-Route::get('/category/{catId}',[categoryController::class,'singleCategory'])->name('category.product');
+Route::get('/category/{categoryId}',[categoryController::class,'singleCategory'])->name('category.product');
 
-Route::get('/product/{prodId}',[productController::class,'show'])->name('product.show');
+Route::get('/product/{productId}',[productController::class,'show'])->name('product.show');
 
 Route::get('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store');//to route for 404 page
 Route::post('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store');

@@ -8,7 +8,7 @@ class category extends Model
 {
     protected $fillable = [
         "name",
-        
-
+        "imagepath",
+        "description",
     ] ;
 }
