@@ -55,6 +55,7 @@
                         <div class="mb-3">
                             Category
                             <select name="category_id" value="{{old('category_id')}}" class="form-control" style="width: 50%"> 
+                                
                               @foreach ($categories as $category )
                                 <option value="{{$category->id}}">{{$category->name}}</option>
                               @endforeach

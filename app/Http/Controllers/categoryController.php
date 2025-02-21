@@ -27,7 +27,7 @@ class categoryController extends controller
     public function store(Request $request){
         $request->validate([
             "name"=> "required|max:20",
-            "imagepath"=> "required|mimes:png,jpg,jpeg",
+            "imagepath"=> "required|mimes:png,jpg,jpeg,webp",
             "description"=> "max:255",
         ]);
         

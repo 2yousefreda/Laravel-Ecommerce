@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('description')->nullable();
             $table->json('cart_items');
+            $table->integer('shipping');
             $table->integer('total_price');
             
             $table->timestamps();

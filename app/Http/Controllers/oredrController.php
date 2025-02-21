@@ -11,10 +11,14 @@ use PHPUnit\Framework\Attributes\RequiresSetting;
 class oredrController extends productController
 {
     public function index(){
-        return "order index";
+        $orders=Order::all();
+        // dd($orders);
+        return view('dashboard.orders',['orders'=>$orders]);
     }
-    public function show($id){
-        return "show order";
+    public function show($orderId){
+        
+        $order=Order::find($orderId);
+        return view('dashboard.viewSingleOrder',['order'=>$order]);
     }
     
    
@@ -36,13 +40,14 @@ class oredrController extends productController
     }
     
     public function store(){
-        
+        // dd(request()->all());
         // @dd(request()->description);
         request()->validate([
             'name'=> ['required'],
             'email'=> ['required',Rule::email()],
             'address'=> ['required'],
             'phone'=> ['required'],
+            'shipping'=> ['required'],
             'totalPrice'=> ['gt:0'],
         ],[
             'totalPrice.gt'=> 'Your cart is Empty '
@@ -67,9 +72,15 @@ class oredrController extends productController
             'address'=> request()->address,
             'phone'=> request()->phone,
             'description'=> request()->description,
+            'shipping'=> request()->shipping,
             'total_price'=> request()->totalPrice,
             'cart_items'=> $jsonProducts,
         ]);
         return to_route('cart.destroyAll');
+    }
+    public function destroy($orderId){
+        $order = Order::findOrFail($orderId);
+        $order->delete();
+        return redirect()->back(); 
     }
 }

@@ -17,7 +17,7 @@
 								<h1>Delicious Seasonal Fruits</h1>
 								<div class="hero-btns">
 									<a href="{{route('category')}}" class="boxed-btn">Fruit Collection</a>
-									<a href="{{route( 'contact')}}" class="bordered-btn">Contact Us</a>
+									
 								</div>
 							</div>
 						</div>
@@ -36,7 +36,7 @@
 								<h1>100% Organic Collection</h1>
 								<div class="hero-btns">
 									<a href="{{route('category')}}" class="boxed-btn">Visit Shop</a>
-									<a href="{{route( 'contact')}}" class="bordered-btn">Contact Us</a>
+									
 								</div>
 							</div>
 						</div>
@@ -55,7 +55,7 @@
 								<h1>Get December Discount</h1>
 								<div class="hero-btns">
 									<a href="{{route('category')}}" class="boxed-btn">Visit Shop</a>
-									<a href="{{route('contact')}}" class="bordered-btn">Contact Us</a>
+									
 								</div>
 							</div>
 						</div>

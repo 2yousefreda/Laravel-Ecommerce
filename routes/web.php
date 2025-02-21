@@ -12,11 +12,14 @@ Route::get('/', [categoryController::class,'showWelcome'])->name('welcome');
 Route::get('/about', function () {
     return view('about');
 })->name('about');
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
 
+Route::get('/dashboard', function () {
+    return view('dashboard.main');
+})->name('dashboard');
 
+Route::get('/indexorder', [oredrController::class,'index'])->name('order.index');
+Route::get('/order/{orderId}', [oredrController::class,'show'])->name('order.show');
+Route::delete('/order/{orderId}', [oredrController::class,'destroy'])->name('order.destroy');
 
 Route::get('/indexcategory', [categoryController::class,'index'])->name('category.index');
 Route::get('/createcategory', [categoryController::class,'create'])->name('category.create');
@@ -34,7 +37,7 @@ route::post('/checkout', [oredrController::class,'store'])->name('order.store');
 
 
 
-Route::get('/index', [productController::class,'index'])->name('product.index');
+Route::get('/indexproduct', [productController::class,'index'])->name('product.index');
 Route::get('/createproduct', [productController::class,'create'])->name('product.create');
 Route::post('/storeproduct', [productController::class,'store'])->name('product.store');
 Route::post('/updateQuantity', [productController::class,'updateQuantity'])->name('product.updateQuantity');

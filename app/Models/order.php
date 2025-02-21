@@ -10,8 +10,9 @@ class order extends Model
         'name',
         'email',
         'phone',
-        'total_price',
         'address',
+        'shipping',
+        'total_price',
         'description',
         'cart_items',
 
