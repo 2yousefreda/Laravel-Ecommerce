@@ -1,13 +1,14 @@
-@section('title')Admin @endsection   
 @extends('layout.dashboard')
+@section('title')Admin @endsection   
 @section('content')
           <!-- /. ROW  -->
+          {{-- @dd(Auth::user()) --}}
           <hr />
           <div class="row">
             <div class="col-lg-12">
               <div class="alert alert-info">
-                <strong>Welcome Jhon Doe ! </strong> You Have No pending Task
-                For Today.
+                <strong>Welcome {{Auth::User()->name}} ! </strong> 
+                
               </div>
             </div>
           </div>

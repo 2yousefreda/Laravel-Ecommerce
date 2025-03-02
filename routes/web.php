@@ -7,7 +7,7 @@ use App\Http\Controllers\productController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
-Route::get('/', [categoryController::class,'showWelcome'])->name('welcome');
+Route::get('/', [categoryController::class,'showWelcome'])->name('home');
 
 Route::get('/about', function () {
     return view('about');
@@ -15,7 +15,7 @@ Route::get('/about', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard.main');
-})->name('dashboard');
+})->name('dashboard')->middleware(['auth','verified']);
 
 Route::get('/indexorder', [oredrController::class,'index'])->name('order.index');
 Route::get('/order/{orderId}', [oredrController::class,'show'])->name('order.show');
@@ -28,7 +28,7 @@ Route::get('/category/{categoryId}/edit', [categoryController::class,'edit'])->n
 Route::put('/category/{categoryId}', [categoryController::class,'update'])->name('category.update');
 Route::delete('/categorydestroy/{categoryId}', [categoryController::class,'destroy'])->name('category.destroy');
 
-Route::get('/cart', [cartController::class,'index'])->name('cart.index');
+Route::get('/cart', [cartController::class,'index'])->name('cart.index')->middleware('auth');
 Route::get('/category', [categoryController::class,'show'])->name('category');
 
 
@@ -46,8 +46,8 @@ Route::get('/category/{categoryId}',[categoryController::class,'singleCategory']
 
 Route::get('/product/{productId}',[productController::class,'show'])->name('product.show');
 
-Route::get('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store');//to route for 404 page
-Route::post('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store');
+Route::get('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store')->middleware(['auth','verified']);//to route for 404 page
+Route::post('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store')->middleware(['auth','verified']);
 
 Route::put('/product/{product}', [productController::class,'update'])->name('product.update');
 Route::get('/product/{product}/edit', [productController::class,'edit'])->name('product.edit');

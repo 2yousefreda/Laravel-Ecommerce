@@ -18,7 +18,7 @@ class categoryController extends controller
     public function showWelcome(){
         $result= category::all();
    
-        return view("welcome",["categories"=> $result]);
+        return view("home",["categories"=> $result]);
     }
 
     public function create(){

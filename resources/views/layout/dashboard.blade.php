@@ -10,6 +10,9 @@
     <link href="{{asset('assets/css/font-awesome.css')}}" rel="stylesheet" />
     <!-- CUSTOM STYLES-->
     <link href="{{asset('assets/css/custom.css')}}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+
     <!-- GOOGLE FONTS-->
     <link
       href="{{url('http://fonts.googleapis.com/css?family=Open+Sans')}}"
@@ -32,14 +35,26 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">
-              <img style="max-width: 150px" src="{{asset('assets/img/logo.png')}}" / >
-            </a>
+            @php
+            // dd(Auth::user()->name);
+
+              $username=Auth::user()->name;
+            @endphp
+            <div style="margin: 20px; display:block;">
+  
+              <i class="fa fa-user" style="color: white;"> </i>
+              <p style="color:white; display: inline;">{{$username}}</p>
+            </div>
           </div>
 
           <span class="logout-spn">
-            <a href="#" style="color: #fff">LOGOUT</a>
-          </span>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf 
+            </form>
+            <a href="#" style="color: #fff" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                LOGOUT <i class="fa fa-sign-out-alt"></i>
+            </a>
+        </span>
         </div>
       </div>
       <!-- /. NAV TOP  -->

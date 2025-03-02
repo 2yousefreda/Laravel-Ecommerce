@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 use App\Models\cart;
 use App\Models\product;
 use App\Models\order;
+
+use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Validation\Rule;
+
 use PHPUnit\Framework\Attributes\RequiresSetting;
+use Symfony\Component\Finder\Glob;
+
 
 class oredrController extends productController
 {
+  
+   
     public function index(){
         $orders=Order::all();
         // dd($orders);
@@ -66,7 +74,10 @@ class oredrController extends productController
             productController::decreaseQuantity($item['product_Id'],$item['quantity']);
         }
         $jsonProducts   = json_encode($filterdElement);
+        $user= FacadesAuth::user();
+        // dd($user->id);
         order::create([
+            'user_id'=> $user->id,
             'name'=> request()->name,
             'email'=> request()->email,
             'address'=> request()->address,
