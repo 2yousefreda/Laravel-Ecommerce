@@ -13,9 +13,9 @@ Route::get('/about', function () {
     return view('about');
 })->name('about');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.main');
-})->name('dashboard')->middleware(['auth','verified']);
+// Route::get('/admin/dashboard', function () {
+//     return view('dashboard.main');
+// })->name('dashboard')->middleware(['auth:admin']);
 
 Route::get('/indexorder', [oredrController::class,'index'])->name('order.index');
 Route::get('/order/{orderId}', [oredrController::class,'show'])->name('order.show');
@@ -56,3 +56,4 @@ Route::delete('/product/{product}', [productController::class,'destroy'])->name(
 
 Route::get('/cart/destroyall', [cartController::class,'destroyAll'])->name('cart.destroyAll');
 Route::delete('/cart/{productId}', [cartController::class,'destroy'])->name('cart.destroy');
+require __DIR__ .'/admin.php';

@@ -1,6 +1,8 @@
 @extends('layout.auth')
 @section('title')Login @endsection
-
+@php
+	
+@endphp
 
 @section('content')
 
@@ -51,13 +53,15 @@
 							Password?
 						</a>
 					</div>
-
+					@if (Route::has('register'))
+						
 					<div class="text-center p-t-136">
 						<a class="txt2" href="{{route('register')}}">
 							Create your Account
 							<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
 						</a>
 					</div>
+					@endif
 				</form>
 
 @endsection

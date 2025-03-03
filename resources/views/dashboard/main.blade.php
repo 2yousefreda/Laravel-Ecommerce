@@ -7,7 +7,7 @@
           <div class="row">
             <div class="col-lg-12">
               <div class="alert alert-info">
-                <strong>Welcome {{Auth::User()->name}} ! </strong> 
+                <strong>Welcome {{$username=Auth::User()->name;}} ! </strong> 
                 
               </div>
             </div>

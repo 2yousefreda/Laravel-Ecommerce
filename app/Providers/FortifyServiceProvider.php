@@ -4,16 +4,20 @@ namespace App\Providers;
 
 use App\Actions\Fortify\CreateNewUser;
 use App\Models\User;
+use App\Models\Admin;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config ;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Features;
+use Laravel\Fortify\Contracts\LogoutResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -22,7 +26,27 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $request=request();
+        if  ($request->is('admin/*')) {
+           
+            Config::set('fortify.guard', 'admin');
+            Config::set('fortify.password', 'admins');
+            Config::set('fortify.prefix', 'admin');
+            // Config::set('fortify.home', 'admin/dashboard');
+            Config::set('fortify.features', [
+                Features::resetPasswords(),
+                Features::emailVerification(),
+                Features::updateProfileInformation(),
+                Features::updatePasswords()
+            ]);
+            $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
+                public function toResponse($request)
+                {
+                    return redirect('admin/dashboard');
+                }
+            });
+           
+        }
     }
 
     /**
@@ -30,6 +54,9 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
+        
+
         Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
@@ -59,15 +86,7 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::verifyEmailView(function () {
             return view('auth.verify');
         });
-     
 
-        Fortify::authenticateUsing(function (Request $request) {
-            $user = User::where('email', $request->email)->first();
-     
-            if ($user &&
-                Hash::check($request->password, $user->password)) {
-                return $user;
-            }
-        });
+      
     }
 }

@@ -38,7 +38,7 @@
             @php
             // dd(Auth::user()->name);
 
-              $username=Auth::user()->name;
+            $username=Auth::User()->name;
             @endphp
             <div style="margin: 20px; display:block;">
   
