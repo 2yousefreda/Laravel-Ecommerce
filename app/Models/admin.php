@@ -10,6 +10,11 @@ use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
+    protected $guard = 'admin';
+    public function isSuperAdmin()
+    {
+        return $this->is_super_admin; 
+    }
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -20,7 +25,9 @@ class Admin extends Authenticatable
      */
     protected $fillable = [
         'name',
+        // 'username',
         'email',
+        // 'phone_number',
         'password',
     ];
 

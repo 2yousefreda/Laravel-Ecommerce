@@ -53,7 +53,7 @@
 							Password?
 						</a>
 					</div>
-					@if (Route::has('register'))
+					@if (!Request::is('admin/*'))
 						
 					<div class="text-center p-t-136">
 						<a class="txt2" href="{{route('register')}}">

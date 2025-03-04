@@ -3,6 +3,8 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\admin;
+use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -17,8 +19,31 @@ class CreateNewUser implements CreatesNewUsers
      *
      * @param  array<string, string>  $input
      */
-    public function create(array $input): User
+    public function create(array $input)
     {
+        $request=request();
+        if($request->is('admin/*')){
+            
+            Validator::make($input, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => [
+                    'required',
+                    'string',
+                    'email',
+                    'max:255',
+                    Rule::unique(User::class),
+                    Rule::unique(Admin::class),
+                ],
+                
+                'password' => $this->passwordRules(),
+            ])->validate();
+    
+            return Admin::create([
+                'name' => $input['name'],
+                'email' => $input['email'],
+                'password' => Hash::make($input['password']),
+            ]);
+        }
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => [
@@ -27,6 +52,7 @@ class CreateNewUser implements CreatesNewUsers
                 'email',
                 'max:255',
                 Rule::unique(User::class),
+                Rule::unique(Admin::class),
             ],
             'password' => $this->passwordRules(),
         ])->validate();

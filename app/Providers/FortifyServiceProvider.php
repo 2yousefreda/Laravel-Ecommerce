@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Hash;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Features;
 use Laravel\Fortify\Contracts\LogoutResponse;
+use Laravel\Fortify\Contracts\LoginResponse;
+use Laravel\Fortify\Contracts\RegisterResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -32,14 +34,21 @@ class FortifyServiceProvider extends ServiceProvider
             Config::set('fortify.guard', 'admin');
             Config::set('fortify.password', 'admins');
             Config::set('fortify.prefix', 'admin');
-            // Config::set('fortify.home', 'admin/dashboard');
-            Config::set('fortify.features', [
-                Features::resetPasswords(),
-                Features::emailVerification(),
-                Features::updateProfileInformation(),
-                Features::updatePasswords()
-            ]);
+            
+            
+            $this->app->instance(LoginResponse::class, new class implements LoginResponse {
+                public function toResponse($request)
+                {
+                    return redirect('admin/dashboard');
+                }
+            });
             $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
+                public function toResponse($request)
+                {
+                    return redirect('admin/login');
+                }
+            });
+            $this->app->instance(RegisterResponse::class, new class implements RegisterResponse {
                 public function toResponse($request)
                 {
                     return redirect('admin/dashboard');
