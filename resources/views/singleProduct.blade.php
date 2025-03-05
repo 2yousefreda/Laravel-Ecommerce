@@ -72,9 +72,11 @@
         </div>
         <div class="row">
             @foreach ($related as $product )  
-            <?php
-            $path=Storage::url($product->imagepath)
-          ?>
+            @php
+                
+                $path=Storage::url($product->imagepath)
+            @endphp
+          
             <div class="col-lg-4 col-md-6 text-center">
                 <div class="single-product-item">
                     <div class="product-image">

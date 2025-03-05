@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\category;
 use App\Models\product;
+
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
+
 
 class categoryController extends controller
 {
     public function index(){
-       $result= category::all();
-   
-        return view("category.index",["categories"=> $result]);
+       $categories= category::all();
+        
+        return view("dashboard.categories.index",["categories"=> $categories]);
     }
     public function showWelcome(){
         $result= category::all();
@@ -22,11 +24,12 @@ class categoryController extends controller
     }
 
     public function create(){
-        return view("category.create");
+        return view("dashboard.categories.create");
     }
     public function store(Request $request){
+        // dd($request->all());
         $request->validate([
-            "name"=> "required|max:20",
+            "name"=> ["required","max:20", Rule::unique(category::class)],
             "imagepath"=> "required|mimes:png,jpg,jpeg,webp",
             "description"=> "max:255",
         ]);
@@ -56,40 +59,63 @@ class categoryController extends controller
             $categories= category::all();
             $products= product::all();
         
+     
         
         return view("category",["categories"=> $categories,"products"=> $products]);
     }
 
+    public function showforAdmin($categoryId){
+        $category= category::findOrFail($categoryId);
+        $productsCounter= count(product::where("category_id", $categoryId)->get());
+        return  view("dashboard.categories.show",["category"=> $category,'products'=> $productsCounter]);
+
+    }
     public function edit($categoryId){
-        // dd($categoryId);
+       
         $category=category::findOrFail($categoryId);
-        return view("category.edit",['category'=> $category]);
+        
+        return view("dashboard.categories.edit",['category'=> $category]);
 
     }
 
     public function update( $categoryId){
-        // @dd($categoryId);
+       
         request()->validate([
             'name'=> ['required','max:255'],
             'description'=> ['max:255'],
-            'imagepath'=> ['required','mimes:jpeg,jpg,png,gif'],
+            'imagepath'=> ['mimes:jpeg,jpg,png,gif'],
         ]);
+        $isImagePath=0;
+        $imagepath="";
         if(request()->has('imagepath')){
             $file=request()->file('imagepath');
             $path=Storage::disk('public')->put('categories',$file);
+            $isImagePath=1;
+            $imagepath=$path;
         }
         $name=request()->name;
         $description=request()->description;
-        $imagepath=$path;
         
         $category=category::findOrFail($categoryId);
-        Storage::disk('public')->delete($category->imagepath);
-        $category->update([
-            'name'=> $name,
-            'description'=>$description,
-            'imagepath'=>$imagepath,
+        if($isImagePath){
             
-        ]);
+            Storage::disk('public')->delete($category->imagepath);
+            $category->update([
+                'name'=> $name,
+                'description'=>$description,
+                
+                'imagepath'=>$imagepath,
+                
+            ]);
+        }else{
+            $category->update([
+                'name'=> $name,
+                'description'=>$description,
+                
+                
+                
+            ]);
+        }
         
         
         return to_route('category.index');

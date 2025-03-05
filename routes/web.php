@@ -32,9 +32,7 @@ Route::get('/product/{productId}',[productController::class,'show'])->name('prod
 Route::get('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store')->middleware(['auth']);//to route for 404 page
 Route::post('/addtocart/{productId}', [cartController::class,'store'])->name('cart.store')->middleware(['auth']);
 
-Route::put('/product/{product}', [productController::class,'update'])->name('product.update');
-Route::get('/product/{product}/edit', [productController::class,'edit'])->name('product.edit');
-Route::delete('/product/{product}', [productController::class,'destroy'])->name('product.destroy');
+
 
 
 Route::get('/cart/destroyall', [cartController::class,'destroyAll'])->name('cart.destroyAll');

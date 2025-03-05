@@ -1,8 +1,6 @@
 @extends('layout.auth')
 @section('title')Login @endsection
-@php
-	
-@endphp
+
 
 @section('content')
 

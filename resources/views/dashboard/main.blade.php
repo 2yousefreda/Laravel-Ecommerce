@@ -1,9 +1,20 @@
-@extends('layout.dashboard')
-@section('title')Admin @endsection   
+
+@extends('layout.dashboard.master')
+@section('title') Admin @endsection
+@section('dashboard_css') @endsection
 @section('content')
+hellow
+
+@endsection
+@section('dashboard_script') @endsection
+
+{{-- ============================================================== --}}
+{{-- @extends('layout.dashboard')
+@section('title')Admin @endsection   
+@section('content') --}}
           <!-- /. ROW  -->
           {{-- @dd(Auth::user()) --}}
-          <hr />
+          {{-- <hr />
           <div class="row">
             <div class="col-lg-12">
               <div class="alert alert-info">
@@ -21,11 +32,11 @@
                   <h4>products</h4>
                 </a>
               </div>
-            </div>
+            </div> --}}
 
         
             
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
+            {{-- <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
               <div class="div-square">
                 <a href="blank.html">
                   <i class="fa fa-users fa-5x"></i>
@@ -85,5 +96,5 @@
         </div>
       </div>
       <!-- /. PAGE INNER  -->
-    </div>
-@endsection
+    </div> --}}
+{{-- @endsection --}}
