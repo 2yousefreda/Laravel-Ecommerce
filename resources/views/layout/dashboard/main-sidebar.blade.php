@@ -20,6 +20,15 @@ $username=Auth::guard('admin')->User()->name;
         <div class="info">
           <a href="#" class="d-block">{{$username}}</a>
         </div>
+        <div class="info">
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            @csrf 
+        </form>
+          <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="d-block">
+            <i class="nav-icon fas fa-sign-out-alt"></i>
+            Logout
+          </a>
+        </div>
       </div>
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -53,7 +62,7 @@ $username=Auth::guard('admin')->User()->name;
               </p>
             </a>
           <li class="nav-item">
-            <a href="{{route('category.index')}}" class="nav-link">
+            <a href="{{route('order.index')}}" class="nav-link">
               <i class="nav-icon fas fa-plane"></i>
               <p>
                 Orders
@@ -63,8 +72,10 @@ $username=Auth::guard('admin')->User()->name;
             </a>
             
           </li>
+          @can('super_admin')
+            
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{route('user.index')}}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Users
@@ -74,14 +85,24 @@ $username=Auth::guard('admin')->User()->name;
             
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{route('admin.index')}}" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Admins
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
-            
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.create')}}" class="nav-link">
+              <i class="nav-icon fas fa-key"></i>
+              <p>
+                Register Admin
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+          </li>
+          @endcan
           
           
         </ul>

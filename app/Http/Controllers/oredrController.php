@@ -21,12 +21,13 @@ class oredrController extends productController
     public function index(){
         $orders=Order::all();
         // dd($orders);
-        return view('dashboard.orders',['orders'=>$orders]);
+        return view('dashboard.orders.index',['orders'=>$orders]);
     }
     public function show($orderId){
         
         $order=Order::find($orderId);
-        return view('dashboard.viewSingleOrder',['order'=>$order]);
+        $products = json_decode($order->cart_items);
+        return view('dashboard.orders.show',['order'=>$order,'products'=>$products]);
     }
     
    

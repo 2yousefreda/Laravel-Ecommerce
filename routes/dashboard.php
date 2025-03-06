@@ -1,17 +1,28 @@
 <?php 
+use App\Http\Controllers\adminController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\oredrController;
+use App\Http\Controllers\userController;
+
 
 route::group([
     "middleware"=> ["auth:admin"],
     'prefix'=> 'admin',
 ], function () {
-    Route::get('/dashboard', function () {
-    return view('dashboard.main');
-})->name('dashboard');
+    Route::get('/dashboard', function () {return view('dashboard.main');})->name('dashboard');
+
+
+    Route::get('/users', [userController::class,'index'])->name('user.index');
+Route::get('/users/{user}', [userController::class,'show'])->name('user.show');
+
+Route::get('/admins', [adminController::class,'index'])->name('admin.index');
+Route::get('/register', [adminController::class,'create'])->name('admin.create');
+Route::post('/register', [adminController::class,'store'])->name('admin.store');
+Route::get('/admins/{user}', [adminController::class,'show'])->name('admin.show');
+Route::delete('/admins/{user}', [adminController::class,'destroy'])->name('admin.destroy');
+
 
 Route::get('/indexproduct', [productController::class,'index'])->name('product.index');
 Route::get('/product/{productId}', [productController::class,'showForAdmin'])->name('product.A_show');

@@ -1,15 +1,15 @@
 @extends('layout.dashboard.master')
 @section('title')
-    Products
+    Users
 @endsection
 @section('dashboard_css')
 
 @endsection
-@section('location') Products: {{count($products)}}@endsection
+@section('location') Users: {{count($users)}}@endsection
 @section('content')
     <div class="create_section"
         style="width: 100%; height: 100px; display: flex; align-items: center; justify-content: center;">
-        <a href="{{ route('product.create') }}" class="btn btn-primary" style="width: 100px;">Create</a>
+        
 
     </div>
     <div class="card-body p-0">
@@ -20,56 +20,44 @@
                         Id
                     </th>
                     <th style="width: 20%">
-                        Products Name
+                        User Name
                     </th>
-                    <th style="width: 11%">
-                        Quantity
-                    </th>
-                    <th style="width: 10%">
-                        Price
-                    </th>
-                    <th style="width: 10%">
-                        Category Id
+                    <th style="width: 20%">
+                        Email
                     </th>
                 </tr>
             </thead>
             <tbody>
-                {{-- @dd(count($products)) --}}
-                @if (count($products))     
-                @foreach ($products as $product)
+               
+                {{-- @if (count($users))      --}}
+                
+                @foreach ($users as $user)
                         <tr>    
                             <td>
-                                {{ $product->id }}
+                                {{ $user->id }}
                             </td>
                             <td>
                                 <a>
-                                    {{ $product->name }}
+                                    {{ $user->name }}
                                 </a>
                                 <br />
                                 <small>
-                                    Created {{ $product->created_at }}
+                                    Created {{ $user->created_at }}
                                 </small>
+                                <td>
+                                    {{ $user->email }}
+                                </td>
     
                             </td>
-                            <td>
-                                {{ $product->quantity }}
-                            </td>
-                            <td>
-                                {{ $product->price }}
-                            </td>
-                            <td>
-                                {{ $product->category_id }}
-                            </td>
-    
-    
+ 
                             
                             <td class="project-actions text-right">
-                                <a class="btn btn-primary btn-sm" href="{{ route('product.A_show', $product->id) }}">
+                                <a class="btn btn-primary btn-sm" href="{{ route('user.show', $user->id) }}">
                                     <i class="fas fa-folder">
                                     </i>
                                     View
                                 </a>
-                                <a class="btn btn-info btn-sm" href="{{ route('product.edit', $product->id) }}">
+                                {{-- <a class="btn btn-info btn-sm" href="{{ route('product.edit', $product->id) }}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit
@@ -84,18 +72,18 @@
                                         <i class="fas fa-trash">
                                         </i>
                                         Delete</button>
-                                </form>
+                                </form> --}}
                             </td>
                         </tr>
                     @endforeach
 
                     
-                    @endif
+                    {{-- @endif --}}
                     
                     
                 </tbody>
             </table>
-            @if (!count($products))
+            @if (!count($users))
                 
             <h2  style="font-size:50px ;width: 100%; display: flex; justify-content: center;">EMPTY</h2>
             @endif

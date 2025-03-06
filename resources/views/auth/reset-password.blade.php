@@ -1,4 +1,4 @@
-@extends('layout.auth')
+@extends('layout.auth.userAuth')
 @section('title')reset password @endsection
 
 				
