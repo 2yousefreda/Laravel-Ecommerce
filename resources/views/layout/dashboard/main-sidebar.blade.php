@@ -1,7 +1,11 @@
+@if (Auth::guard('admin')->user())
+  
+
 @php
 // dd(Auth::user()->name);
 
 $username=Auth::guard('admin')->User()->name;
+$userid=Auth::guard('admin')->User()->id;
 @endphp
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -18,7 +22,7 @@ $username=Auth::guard('admin')->User()->name;
           <img src="{{asset('assets/dashboard/img/user8-128x128.jpg')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{$username}}</a>
+          <a href="{{route('admin.show',$userid)}}" class="d-block">{{$username}}</a>
         </div>
         <div class="info">
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -111,3 +115,4 @@ $username=Auth::guard('admin')->User()->name;
     </div>
     <!-- /.sidebar -->
   </aside>
+  @endif

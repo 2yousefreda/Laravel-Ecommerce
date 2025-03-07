@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\admin;
 use Illuminate\Http\Request;
 use App\Models\User;
-// use Illuminate\Auth\Access\Gate;
+
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
@@ -21,7 +21,7 @@ class adminController extends Controller
         return view('dashboard.admins.index',['users'=>$users]);
     }
     public function show(admin $user){
-        if  (Gate::denies('super_admin')) {
+        if  (Gate::denies('user.show', $user)) {
             abort(403);
         }
         $user=[

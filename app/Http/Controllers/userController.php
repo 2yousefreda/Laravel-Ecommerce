@@ -16,7 +16,7 @@ class userController extends Controller
         return view('dashboard.users.index',['users'=>$users]);
     }
     public function show(User $user){
-        if  (Gate::denies('super_admin')) {
+        if  (Gate::denies('user.show',$user)) {
             abort(403);
         }
         $user=[

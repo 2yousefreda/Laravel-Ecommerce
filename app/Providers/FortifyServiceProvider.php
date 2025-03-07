@@ -100,8 +100,12 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.verify');
         });
 
-        Gate::define('super_admin', function (Admin $admin):bool {
+        Gate::define('super_admin', function ($admin):bool {
             return (bool)$admin->super_admin;
+        });
+        Gate::define('user.show', function ($authedUser,$user):bool {
+            // dd($authedUser);
+            return ((bool)$authedUser->super_admin||$authedUser->id===$user->id);
         });
       
     }

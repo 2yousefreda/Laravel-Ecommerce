@@ -20,12 +20,15 @@
           <li>UserName: {{$user['username']}}</li>
           <li>Email: {{$user['email']}}</li> 
           <li>Phone: {{$user['phone']}}</li> 
+          @can('super_admin')
           @if ($user['is_superAdmin'])
           <li>Super Admin: YES</li> 
           @else
           <li>Super Admin: NO</li> 
 
           @endif
+            
+          @endcan
           <li>Created at: {{$user['created_at']}}</li>
           <li>Updated at: {{$user['updated_at']}}</li>
         </ul>

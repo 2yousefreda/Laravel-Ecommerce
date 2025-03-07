@@ -1,5 +1,7 @@
 <?php 
 use App\Http\Controllers\adminController;
+use App\Models\order;
+use App\Models\product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -11,7 +13,11 @@ route::group([
     "middleware"=> ["auth:admin"],
     'prefix'=> 'admin',
 ], function () {
-    Route::get('/dashboard', function () {return view('dashboard.main');})->name('dashboard');
+    Route::get('/dashboard', function () {
+        $order=count(order::all());
+        $product=count(product::all());
+        
+        return view('dashboard.main',['order'=>$order,'product'=>$product]);})->name('dashboard');
 
 
     Route::get('/users', [userController::class,'index'])->name('user.index');

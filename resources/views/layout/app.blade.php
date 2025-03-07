@@ -81,19 +81,21 @@
                                     </div>
                                 </li>
                                 @if (Auth::user() != null)
+                                @php
+                                   $username= Auth::user()->name;
+                                   $userid= Auth::user()->id;
+                                @endphp
                                     <li>
                                         <div style=" display:block;" class="dropdown">
-                                            <a href="#" class="dropdown-toggle" id="userDropdown"
+                                            <a href="" class="dropdown-toggle" id="userDropdown"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                                                 style="color: white; text-decoration: none;">
                                                 <i class="fa fa-user" style="color: white;"></i>
                                                 <p style="color:white; display: inline;">
-                                                    {{ $username = Auth::user()->name }}</p>
+                                                    {{ $username  }}</p>
                                             </a>
                                             <ul class="sub-menu">
                                                 <li>
-
-
                                                     <a style="color: black" class="dropdown-item"
                                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                         Logout
@@ -103,7 +105,9 @@
                                                         @csrf
 
                                                     </form>
-
+                                                </li>
+                                                <li>
+                                                    <a href="{{route('profile.show',$userid)}}">Profile</a>
                                                 </li>
                                             </ul>
                                         </div>
