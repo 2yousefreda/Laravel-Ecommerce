@@ -26,7 +26,7 @@
             <ul>
               <li>Product ID: {{$product->product_id}}</li>
               <li>Product name: {{$product->product_name}}</li>
-              <li>Product peice: {{$product->product_price}}</li>
+              <li>Product price: {{$product->product_price}}</li>
               <li>Product quantity: {{$product->quantity}}</li>
                 
             </ul>

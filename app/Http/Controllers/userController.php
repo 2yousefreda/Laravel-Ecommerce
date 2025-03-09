@@ -15,7 +15,8 @@ class userController extends Controller
         // dd($users);
         return view('dashboard.users.index',['users'=>$users]);
     }
-    public function show(User $user){
+    public function show(){
+        $user = request()->user();
         if  (Gate::denies('user.show',$user)) {
             abort(403);
         }

@@ -135,7 +135,7 @@
 							<a href="{{route('category.product',$category->id)}}"><img src="{{url( $path)}}" alt=""></a>
 						</div>
 						<h3>{{$category->name}}</h3>
-                        <p>{{$category->description}}</p>
+						<p>{!! nl2br(strip_tags($category->description)) !!}</p>
 					</div>
 				</div>
                 @endforeach

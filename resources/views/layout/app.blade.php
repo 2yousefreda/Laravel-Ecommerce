@@ -31,8 +31,6 @@
     <!-- main style -->
     <link rel="stylesheet" href="{{ asset('/assets/css/main.css') }}">
     <!-- responsive -->
-    <link rel="stylesheet" href="{{ asset('/assets/css/responsive.css') }}">
-
 
 
 </head>
@@ -107,7 +105,7 @@
                                                     </form>
                                                 </li>
                                                 <li>
-                                                    <a href="{{route('profile.show',$userid)}}">Profile</a>
+                                                    <a href="{{route('profile.show')}}">Profile</a>
                                                 </li>
                                             </ul>
                                         </div>

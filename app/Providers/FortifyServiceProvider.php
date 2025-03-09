@@ -104,7 +104,7 @@ class FortifyServiceProvider extends ServiceProvider
             return (bool)$admin->super_admin;
         });
         Gate::define('user.show', function ($authedUser,$user):bool {
-            // dd($authedUser);
+            
             return ((bool)$authedUser->super_admin||$authedUser->id===$user->id);
         });
       
