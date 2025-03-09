@@ -1,88 +1,44 @@
-@section('title')Admin @endsection   
-@extends('layout.dashboard')
-@section('content')
-          <!-- /. ROW  -->
-          <hr />
-          <div class="row">
-            <div class="col-lg-12">
-              <div class="alert alert-info">
-                <strong>Welcome Jhon Doe ! </strong> You Have No pending Task
-                For Today.
-              </div>
-            </div>
-          </div>
-          <!-- /. ROW  -->
-          <div class="row text-center pad-top">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-              <div class="div-square">
-                <a href="{{route('product.index')}}">
-                  <i class="fa fa-circle-o-notch fa-5x"></i>
-                  <h4>products</h4>
-                </a>
-              </div>
-            </div>
 
-        
-            
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-              <div class="div-square">
-                <a href="blank.html">
-                  <i class="fa fa-users fa-5x"></i>
-                  <h4>See Users</h4>
-                </a>
-              </div>
-            </div>
-            
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-              <div class="div-square">
-                <a href="blank.html">
-                  <i class="fa fa-key fa-5x"></i>
-                  <h4>Admin</h4>
-                </a>
-              </div>
-            </div>
-           
-          <!-- /. ROW  -->
-          <div class="row text-center pad-top">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-              <div class="div-square">
-                <a href="{{route('category.index')}}">
-                  <i class="fa fa-clipboard fa-5x"></i>
-                  <h4>Categories</h4>
-                </a>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-              <div class="div-square">
-                <a href="blank.html">
-                  <i class="fa fa-gear fa-5x"></i>
-                  <h4>Settings</h4>
-                </a>
-              </div>
-            </div>
-          
-          
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
-              <div class="div-square">
-                <a href="{{route('order.index')}}">
-                  <i class="fa fa-rocket fa-5x"></i>
-                  <h4>Orders</h4>
-                </a>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 " >
-              <div class="div-square ">
-                <a href="blank.html">
-                  <i class="fa fa-user fa-5x "></i>
-                  <h4>Register User</h4>
-                </a>
-              </div>
-            </div>
+@extends('layout.dashboard.master')
+@section('title') dashboard @endsection
+@section('dashboard_css') @endsection
+@section('location')dashboard @endsection
+@section('content')
+
+<div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>{{$order}}</h3>
+
+            <p>Orders</p>
           </div>
-          <!-- /. ROW  -->
-          <div class="row text-center pad-top"></div>
+          <div class="icon">
+            <i class="ion ion-plane"></i>
+          </div>
+          <a href="{{route('order.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-      <!-- /. PAGE INNER  -->
-    </div>
+      <!-- ./col -->
+      <div class="col-lg-3 col-6">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>{{$product}}<sup style="font-size: 20px"></sup></h3>
+
+            <p>Product</p>
+          </div>
+          <div class="icon">
+            <i class="ion ion-cube"></i>
+          </div>
+          <a href="{{route('product.index')}}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+      </div>
+      </div>
+
 @endsection
+@section('dashboard_script') @endsection

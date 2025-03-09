@@ -10,89 +10,86 @@ use Illuminate\Validation\Rules\Numeric;
 
 class cartController extends Controller
 {
-    public function index(){
-       $isEmpty= empty(Cart::first());
-        $products = cart::all();
-        $shipping=0;
-        if(!$isEmpty){
-            $shipping=40; 
+    public function index()
+    {
+        $products = request()->user()->carts;
+
+        $isEmpty = $products->isEmpty();
+        $shipping = 0;
+        if (!$isEmpty) {
+            $shipping = 40;
         }
-        $subtotal=0;  
-        foreach($products as $product){
-            $subtotal+=$product->total_Price;
+        $subtotal = 0;
+        foreach ($products as $product) {
+            $subtotal += $product->total_Price;
         }
-        $totalPrice=$shipping + $subtotal;
-        return view("cart",["products"=>$products,'isEmpty'=>$isEmpty,'subtotal'=>$subtotal,'totalPrice'=>$totalPrice,'shipping'=>$shipping]);
+        $totalPrice = $shipping + $subtotal;
+        return view('cart', ['products' => $products, 'isEmpty' => $isEmpty, 'subtotal' => $subtotal, 'totalPrice' => $totalPrice, 'shipping' => $shipping]);
     }
-   
-    protected static function validateQuantity( $productQuanity, $quantityInCart){
+
+    protected static function validateQuantity($productQuanity, $quantityInCart)
+    {
         // $prod=$productQuanity;
-        $Data=['productQuantity'=>$productQuanity,'quantityInCart'=>$quantityInCart];
+        $Data = ['productQuantity' => $productQuanity, 'quantityInCart' => $quantityInCart];
         // $Data['productQuantity']=$prod;
 
-        $rules=['quantityInCart'=>'min:1|lte:productQuantity'];
-        $ErrorMessage=['quantityInCart.lte'=> 'you must not buy greater than '. $productQuanity];
-        if($productQuanity==0){
-            $ErrorMessage['quantityInCart.lte']="out of stock";
+        $rules = ['quantityInCart' => 'min:1|lte:productQuantity'];
+        $ErrorMessage = ['quantityInCart.lte' => 'you must not buy greater than ' . $productQuanity];
+        if ($productQuanity == 0) {
+            $ErrorMessage['quantityInCart.lte'] = 'out of stock';
         }
-       
-        $val=Validator::make($Data, $rules, $ErrorMessage);
-        
-            
-            return $val;
-         
+
+        $val = Validator::make($Data, $rules, $ErrorMessage);
+
+        return $val;
     }
-    public function store($productId){
-        $quantity =request()->get("quantity");
+    public function store(product $product)
+    {
+        $quantity = request()->get('quantity');
         request()->validate([
-            "quantity"=> ["required",'integer','gt:0'],
-            "product_Id"=> ['exists:products,id'],
+            'quantity' => ['required', 'integer', 'gt:0'],
         ]);
-        
-        $product=product::findOrFail($productId);
 
-        $cartProduct=cart::where('product_id',$productId)->first();
-        $newQuantity=$quantity;
-        if(!empty( $cartProduct)){
-
-            $newQuantity=$quantity+$cartProduct->quantity;
+        $cartProduct = cart::where('product_id', $product->id)
+            ->where('user_id', request()->user()->id)
+            ->firstOrNew([
+                'user_id' => request()->user()->id,
+                'product_Id' => $product->id,
+                'product_Name' => $product->name,
+                'product_Price' => $product->price,
+                'image_Path' => $product->imagepath,
+            ]);
+        $newQuantity = $quantity;
+        if (!empty($cartProduct)) {
+            $newQuantity = $quantity + $cartProduct->quantity;
         }
 
-        
-        $val= cartController::validateQuantity( $product->quantity,$newQuantity);
-        if($val->fails()){
+        $val = cartController::validateQuantity($product->quantity, $newQuantity);
+        if ($val->fails()) {
             session()->flash('error', $val->errors()->first());
             return redirect()->back()->withErrors($val)->withInput();
-        }  
-
-
-        $totalPrice=$newQuantity * $product->price;
-        if (empty($cartProduct)){
-
-            cart::create([
-                "product_Id"=> $product->id,
-                "product_Name"=>$product->name,
-                "product_Price"=>$product->price,
-                "quantity"=>$newQuantity,
-                "total_Price"=>$totalPrice,
-                "image_Path"=>$product->imagepath,
-            ]);
-        }else{
-            $cartProduct->update([
-                "quantity"=>$newQuantity,
-                "total_Price"=>$totalPrice,
-            ]);
         }
 
-        return to_route("cart.index");
+        $totalPrice = $newQuantity * $product->price;
+
+        $cartProduct->fill([
+            'quantity' => $newQuantity,
+            'total_Price' => $totalPrice,
+        ]);
+        $cartProduct->save();
+
+        return to_route('cart.index');
+        //return back();
     }
-    public function destroy($productId){
-        $product=cart::findOrFail($productId);
+    public function destroy($productId)
+    {
+        $product = cart::findOrFail($productId);
         $product->delete();
-        return to_route("cart.index");
+        return to_route('cart.index');
     }
-    public function destroyAll(){
+    public function destroyAll()
+    {
         cart::truncate();
-        return to_route("category");
+        return to_route('category');
     }
 }
