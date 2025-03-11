@@ -33,7 +33,8 @@ class FortifyServiceProvider extends ServiceProvider
         if  ($request->is('admin/*')) {
            
             Config::set('fortify.guard', 'admin');
-            Config::set('fortify.password', 'admins');
+            Config::set('fortify.passwords', 'admins');
+            
             Config::set('fortify.prefix', 'admin');
             
             
@@ -82,19 +83,31 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
 
+     
+        Fortify::resetPasswordView(function (Request $request) {
+            if(config('fortify.guard')== 'admin') {
+                
+                
+                return view('auth.admin.reset-password', ['request' => $request]);
+            }
+            return view('auth.reset-password', ['request' => $request]);
+        });
+
         if  (config::get('fortify.guard')=='admin') {
             Fortify::loginView('auth.admin.login');
+            Fortify::requestPasswordResetLinkView('auth.admin.forgot-password');
+            
         }else{
+           
             Fortify::loginView('auth.login');
+            Fortify::requestPasswordResetLinkView('auth.Forgot-Password');
         }
+
+
+
+
         Fortify::registerView(function(){
             return view('auth.register');
-        });
-        Fortify::requestPasswordResetLinkView(function(){
-            return view('auth.Forgot-Password');
-        });
-        Fortify::resetPasswordView(function (Request $request) {
-            return view('auth.reset-password', ['request' => $request]);
         });
         Fortify::verifyEmailView(function () {
             return view('auth.verify');
