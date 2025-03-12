@@ -50,6 +50,7 @@ route::group(
         Route::delete('/categorydestroy/{categoryId}', [categoryController::class, 'destroy'])->name('category.destroy');
 
         Route::get('/indexorder', [oredrController::class, 'index'])->name('order.index');
+        
         Route::get('/order/{orderId}', [oredrController::class, 'show'])->name('order.show');
         Route::delete('/order/{orderId}', [oredrController::class, 'destroy'])->name('order.destroy');
     },

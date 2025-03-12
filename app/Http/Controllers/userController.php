@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -12,7 +13,7 @@ class userController extends Controller
             abort(403);
         }
         $users = User::all();
-        // dd($users);
+        
         return view('dashboard.users.index',['users'=>$users]);
     }
     public function show(){
@@ -29,6 +30,18 @@ class userController extends Controller
   
         
         return view('dashboard.users.show',['user'=>$user]);
+    }
+    
+    public function indexUserOrder(){
+        $user = request()->user();
+        
+        if  (Gate::denies('user.show',$user)) {
+            abort(403);
+        }
+        $orders = order::where('user_id',$user->id)->get();
+        
+        return view('dashboard.orders.index',['orders'=>$orders]);
+
     }
 
 }

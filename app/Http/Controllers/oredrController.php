@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\cart;
 use App\Models\product;
 use App\Models\order;
-
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth as FacadesAuth;
@@ -20,11 +20,14 @@ class oredrController extends productController
    
     public function index(){
         $orders=Order::all();
-        // dd($orders);
+        
         return view('dashboard.orders.index',['orders'=>$orders]);
     }
     public function show($orderId){
-        
+        $user=request()->user();    
+        if  (Gate::denies('user.show',$user)) {
+            abort(403);
+        }
         $order=Order::find($orderId);
         $products = json_decode($order->cart_items);
         return view('dashboard.orders.show',['order'=>$order,'products'=>$products]);
@@ -76,7 +79,7 @@ class oredrController extends productController
         }
         $jsonProducts   = json_encode($filterdElement);
         $user= FacadesAuth::user();
-        // dd($user->id);
+        
         order::create([
             'user_id'=> $user->id,
             'name'=> request()->name,
@@ -91,6 +94,11 @@ class oredrController extends productController
         return to_route('cart.destroyAll');
     }
     public function destroy($orderId){
+        
+        $user=request()->user();    
+        if  (Gate::denies('user.show',$user)) {
+            abort(403);
+        }
         $order = Order::findOrFail($orderId);
         $order->delete();
         return redirect()->back(); 

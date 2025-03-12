@@ -24,8 +24,9 @@
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
+  @if (Auth::guard('admin')->user())
  @include('layout.dashboard.main-sidebar')
-
+@endif
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -61,7 +62,9 @@
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
+  @if (Auth::guard('admin')->user())
 @include('layout.dashboard.footer')
+@endif
 </div>
 <!-- ./wrapper -->
 
