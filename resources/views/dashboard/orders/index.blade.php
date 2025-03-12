@@ -52,7 +52,7 @@
                         View
                     </a>
                     
-                    <form method="POST" action="{{route('order.destroy',$order->id)}}" style=" display: inline">
+                    <form method="POST" @if(Auth::guard('web')->user()) action="{{route('user.order.destroy',$order->id)}}" @else action="{{route('order.destroy',$order->id)}}" @endif  style=" display: inline">
                           @csrf
                           @method('DELETE')
                         <button type="submit" @if(Auth::guard('web')->user())  class="btn btn-danger btn-sm" @else class="btn btn-info btn-sm "  @endif >@if(Auth::guard('web')->user()) cancel @else Done @endif </button>

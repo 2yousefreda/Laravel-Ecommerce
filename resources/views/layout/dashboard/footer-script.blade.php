@@ -1,5 +1,4 @@
 
-<!-- jQuery -->
 <script src="{{asset('assets/dashboard/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrp -->
 <script src="{{asset('assets/dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
