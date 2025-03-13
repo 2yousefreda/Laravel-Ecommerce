@@ -78,7 +78,7 @@ class cartController extends Controller
         ]);
         $cartProduct->save();
 
-        return to_route('cart.index');
+        return redirect()->back(); 
         //return back();
     }
     public function destroy($productId)

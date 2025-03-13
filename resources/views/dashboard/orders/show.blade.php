@@ -25,9 +25,12 @@
             @foreach ($products as $product)
             <ul>
               <li>Product ID: {{$product->product_id}}</li>
-              <li>Product name: {{$product->product_name}}</li>
-              <li>Product price: {{$product->product_price}}</li>
-              <li>Product quantity: {{$product->quantity}}</li>
+              <ul>
+
+                <li>Product name: {{$product->product_name}}</li>
+                <li>Product price: {{$product->product_price}}</li>
+                <li>Product quantity: {{$product->quantity}}</li>
+              </ul>
                 
             </ul>
               @endforeach
