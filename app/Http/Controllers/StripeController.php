@@ -6,20 +6,11 @@ use App\Models\cart;
 use App\Models\order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
+use App\Http\Requests\checkoutStripeRequest;
 class StripeController extends Controller
 {
-    public function checkout(){
-        request()->validate([
-            'name'=> ['required'],
-            'email'=> ['required',Rule::email()],
-            'address'=> ['required'],
-            'phone'=> ['required'],
-            'shipping'=> ['required'],
-            'totalPrice'=> ['gt:0'],
-        ],[
-            'totalPrice.gt'=> 'Your cart is Empty '
-        ]);
+    public function checkout(checkoutStripeRequest $request){
+   $valedated = $request->validated();
         $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
         $products=request()->user()->carts;
    
@@ -51,15 +42,15 @@ class StripeController extends Controller
     'line_items' => $LineItems,
         
     'mode' => 'payment',
-    'success_url' => route('checkout.success',request()->all()),
+    'success_url' => route('checkout.success',$valedated),
     'cancel_url' => route('checkout.cancel'),
 
     ]);
     
     return redirect($checkout_session->url);
 }
-public function success(){
-    dd(request()->all());
+public function success(checkoutStripeRequest $request){
+    $data = $request->validated();
     $cartItems= cart::all();
     $filterdElement=[];
     
@@ -73,19 +64,12 @@ public function success(){
         productController::decreaseQuantity($item['product_Id'],$item['quantity']);
     }
     $jsonProducts   = json_encode($filterdElement);
+    $data['cart_items']=$jsonProducts;
     $user= request()->user();
+    $data['user_id']=$user->id;
+   
     
-    order::create([
-        'user_id'=> $user->id,
-        'name'=> request()->name,
-        'email'=> request()->email,
-        'address'=> request()->address,
-        'phone'=> request()->phone,
-        'description'=> request()->description,
-        'shipping'=> request()->shipping,
-        'total_price'=> request()->totalPrice,
-        'cart_items'=> $jsonProducts,
-    ]);
+    order::create($data);
     return to_route('cart.destroyAll');
 }
 public function cancel(){

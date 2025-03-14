@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 use App\Models\cart;
-use App\Models\product;
 use App\Models\order;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Container\Attributes\Auth as AttributesAuth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
-use Illuminate\Validation\Rule;
+use App\Http\Requests\CreateOrderRequest;
 
 
 
 
-class oredrController extends productController
+
+
+class oredrController extends Controller
 {
   
    
@@ -33,19 +31,16 @@ class oredrController extends productController
     }
     
    
-    public function create(){
+    public function create(CreateOrderRequest $request){
         
-        request()->validate([
-            "totalPrice"=> ['gt:0']
-        ],[
-            'totalPrice.gt'=> 'Your cart is empty'
-        ]);
-        $isEmpty=request()->isEmpty;
+       $validated= $request->validated();
         
         $order=  cart::all();
-        $suptotal=request()->suptotal;
-        $shipping=request()->shipping;
-        $totalPrice=request()->totalPrice;
+        $isEmpty=$validated['isEmpty'];
+        
+        $suptotal=$validated['suptotal'];
+        $shipping=$validated['shipping'];
+        $totalPrice=$validated['totalPrice'];
         
         return view("checkout",['orders'=>$order,'isEmpty'=>$isEmpty,'suptotal'=> $suptotal,'shipping'=>$shipping,'totalPrice'=>$totalPrice]);
     }

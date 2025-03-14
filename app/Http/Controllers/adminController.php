@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use App\Http\Requests\StoreAdminRequest;
 class adminController extends Controller
 {
 
@@ -44,46 +45,22 @@ class adminController extends Controller
        return view('auth.admin.register');
     }
 
-    protected function passwordRules(): array
-    {
-        return ['required', 'string', Password::default(), 'confirmed'];
-    }
+   
 
-    public function store(Request $request){
+    public function store(StoreAdminRequest $request){
         if  (Gate::denies('super_admin')) {
             abort(403);
         }
-        $input= ($request->all());
-        $is_super_admin = false;
-        
-        if($request->has('super_admin')){
-            $is_super_admin=true;
+        $validated = $request->validated();
+        if (request()->has('super_admin')) { 
+            $validated['super_admin'] = true;
+        }else{
+            $validated['super_admin'] = false;
+            
         }
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-            'username' => ['required','string',Rule::unique(Admin::class),'max:255'],
-            'phone_number' => ['required',Rule::unique(Admin::class), 'string', 'max:255'],
-            'email' => [
-                'required',
-                'string',
-                'email',
-                'max:255',
-                Rule::unique(User::class),
-                Rule::unique(Admin::class),
-            ],
-            
-            'password' => $this->passwordRules(),
-        ])->validate();
+        $validated['password'] = Hash::make( $validated['password']);
 
-        Admin::create([
-            'name' => $input['name'],
-            'username' => $input['username'],
-            'email' => $input['email'],
-            'phone_number' => $input['phone_number'],
-            'super_admin' => $is_super_admin,
-            
-            'password' => Hash::make($input['password']),
-        ]);
+        Admin::create( $validated);
         return redirect()->back()->with('success','Done');
     }
     public function destroy(Admin $user){

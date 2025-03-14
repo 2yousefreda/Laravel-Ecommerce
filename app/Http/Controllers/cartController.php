@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use App\Models\cart;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Numeric;
+
 
 class cartController extends Controller
 {
@@ -79,7 +78,7 @@ class cartController extends Controller
         $cartProduct->save();
 
         return redirect()->back(); 
-        //return back();
+        
     }
     public function destroy($productId)
     {

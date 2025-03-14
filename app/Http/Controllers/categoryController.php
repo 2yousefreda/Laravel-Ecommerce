@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\category;
 use App\Models\product;
 
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+
+use App\Http\Requests\StoreCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
+
 use Illuminate\Support\Facades\Storage;
 
 
@@ -26,31 +28,20 @@ class categoryController extends controller
     public function create(){
         return view("dashboard.categories.create");
     }
-    public function store(Request $request){
-        // dd($request->all());
-        $request->validate([
-            "name"=> ["required","max:20", Rule::unique(category::class)],
-            "imagepath"=> "required|mimes:png,jpg,jpeg,webp",
-            "description"=> "max:255",
-        ]);
+    public function store(StoreCategoryRequest $request){
+        
+       $validated= $request->validated();
         
         if($request->has('imagepath')){
-            $file=request()->file('imagepath');
-            $path=Storage::disk('public')->put('categories',$file);
+            $ImagePath=StoreImage('imagepath','categories');
+            $validated['imagepath']=$ImagePath;
         }
         
 
-        $name=$request->name;
-        $description=$request->description;
-        $imagepath=$path;
+       
         
 
-        category::create([
-            'name'=> $name,
-            'description'=>$description,
-            'imagepath'=>$imagepath,
-            
-        ]);
+        category::create( $validated);
         return to_route('category.index');
     }
     public function show(){
@@ -78,43 +69,25 @@ class categoryController extends controller
 
     }
 
-    public function update( $categoryId){
+    public function update(UpdateCategoryRequest $request, $categoryId){
        
-        request()->validate([
-            'name'=> ['required','max:255'],
-            'description'=> ['max:255'],
-            'imagepath'=> ['mimes:jpeg,jpg,png,gif'],
-        ]);
-        $isImagePath=0;
-        $imagepath="";
+        $validated= $request->validated();
+       
         if(request()->has('imagepath')){
-            $file=request()->file('imagepath');
-            $path=Storage::disk('public')->put('categories',$file);
-            $isImagePath=1;
-            $imagepath=$path;
+            
+            $ImagePath=StoreImage('imagepath','categories');
+            $validated['imagepath']=$ImagePath;
+        
         }
-        $name=request()->name;
-        $description=request()->description;
+     
         
         $category=category::findOrFail($categoryId);
-        if($isImagePath){
+        if(request()->has('imagepath')){
             
             Storage::disk('public')->delete($category->imagepath);
-            $category->update([
-                'name'=> $name,
-                'description'=>$description,
-                
-                'imagepath'=>$imagepath,
-                
-            ]);
+            $category->update($validated);
         }else{
-            $category->update([
-                'name'=> $name,
-                'description'=>$description,
-                
-                
-                
-            ]);
+            $category->update($validated);
         }
         
         
