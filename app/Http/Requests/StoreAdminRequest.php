@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Hash;
+
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\admin;

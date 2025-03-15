@@ -33,20 +33,20 @@ class productController extends Controller
         return to_route('product.index');
     }
 
-    public function update(UpdateProductRequest $request, $productId){
+    public function update(UpdateProductRequest $request,product $product){
+        
         $validated= $request->validated();
         if(request()->has('imagepath')){
            $ImagePath= StoreImage('imagepath','products');
            $validated['imagepath']=$ImagePath;
            
         }
-        $singleProduct=product::findOrFail($productId);
         if(request()->has('imagepath')){
 
-            Storage::disk('public')->delete($singleProduct->imagepath);
-            $singleProduct->update($validated);
+            Storage::disk('public')->delete($product->imagepath);
+            $product->update($validated);
         }else{
-            $singleProduct->update($validated);
+            $product->update($validated);
         }
         return to_route('product.index');
     }

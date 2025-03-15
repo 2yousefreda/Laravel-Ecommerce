@@ -10,6 +10,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config ;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\RateLimiter;
@@ -118,7 +119,15 @@ class FortifyServiceProvider extends ServiceProvider
         });
         Gate::define('user.show', function ($authedUser,$user):bool {
             
-            return ((bool)$authedUser->super_admin||$authedUser->id===$user->id);
+            
+            return ((bool)$authedUser->super_admin||($authedUser->id===$user->id)&&Auth::guard('web')->user());
+        });
+        Gate::define('admin.show', function ($authedUser,$user):bool {
+            return ((bool)$authedUser->super_admin||($authedUser->id===$user->id)&&Auth::guard('admin')->user());
+        });
+        Gate::define('user.Profile.edit', function ($authedUser,$user):bool {
+        
+            return ((bool)$authedUser->id==$user->id && Auth::guard('web')->user());
         });
       
     }

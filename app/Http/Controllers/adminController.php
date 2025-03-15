@@ -21,7 +21,7 @@ class adminController extends Controller
         return view('dashboard.admins.index',['users'=>$users]);
     }
     public function show(admin $user){
-        if  (Gate::denies('user.show', $user)) {
+        if  (Gate::denies('admin.show', $user)) {
             abort(403);
         }
         $user=[

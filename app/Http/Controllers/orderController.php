@@ -11,7 +11,7 @@ use App\Http\Requests\CreateOrderRequest;
 
 
 
-class oredrController extends Controller
+class orderController extends Controller
 {
   
    
@@ -54,5 +54,16 @@ class oredrController extends Controller
         $order = Order::findOrFail($orderId);
         $order->delete();
         return redirect()->back(); 
+    }
+    public function indexUserOrder(){
+        $user = request()->user();
+        
+        if  (Gate::denies('user.show',$user)) {
+            abort(403);
+        }
+        $orders = order::where('user_id',$user->id)->get();
+        
+        return view('dashboard.orders.index',['orders'=>$orders]);
+
     }
 }

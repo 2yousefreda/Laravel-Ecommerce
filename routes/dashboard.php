@@ -5,7 +5,7 @@ use App\Models\product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\oredrController;
+use App\Http\Controllers\orderController;
 use App\Http\Controllers\userController;
 
 route::group(
@@ -49,9 +49,9 @@ route::group(
         Route::put('/category/{categoryId}/update', [categoryController::class, 'update'])->name('category.update');
         Route::delete('/categorydestroy/{categoryId}', [categoryController::class, 'destroy'])->name('category.destroy');
 
-        Route::get('/indexorder', [oredrController::class, 'index'])->name('order.index');
+        Route::get('/indexorder', [orderController::class, 'index'])->name('order.index');
         
-        Route::get('/order/{orderId}', [oredrController::class, 'show'])->name('order.show');
-        Route::delete('/order/{orderId}', [oredrController::class, 'destroy'])->name('order.destroy');
+        Route::get('/order/{orderId}', [orderController::class, 'show'])->name('order.show');
+        Route::delete('/order/{orderId}', [orderController::class, 'destroy'])->name('order.destroy');
     },
 );
