@@ -36,6 +36,7 @@
               @endforeach
           </li>
           <li>shipping: {{$order->shipping}}</li>
+         
           <li>Total Price: {{$order->total_price}}</li>
           
           <li>Created at: {{$order->created_at}}</li>

@@ -38,9 +38,9 @@ class StripeController extends Controller
             ],
             'quantity' => 1, 
         ];
+        
     $checkout_session = $stripe->checkout->sessions->create([
     'line_items' => $LineItems,
-        
     'mode' => 'payment',
     'success_url' => route('checkout.success',$valedated),
     'cancel_url' => route('checkout.cancel'),
@@ -67,6 +67,8 @@ public function success(checkoutStripeRequest $request){
     $data['cart_items']=$jsonProducts;
     $user= request()->user();
     $data['user_id']=$user->id;
+    
+
    
     
     order::create($data);
