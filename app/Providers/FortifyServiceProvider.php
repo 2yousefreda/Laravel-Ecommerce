@@ -129,6 +129,10 @@ class FortifyServiceProvider extends ServiceProvider
         
             return ((bool)$authedUser->id==$user->id && Auth::guard('web')->user());
         });
+        Gate::define('admin.Profile.edit', function ($authedUser,$user):bool {
+        // dd(Auth::user(),$user);
+            return ((bool)($authedUser->id===$user->id));
+        });
       
     }
 }

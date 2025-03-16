@@ -28,6 +28,8 @@ route::group(
         Route::get('/register', [adminController::class, 'create'])->name('admin.create');
         Route::post('/register', [adminController::class, 'store'])->name('admin.store');
         Route::get('/admins/{user}', [adminController::class, 'show'])->name('admin.show');
+        Route::get('/profile', [adminController::class, 'edit'])->name('admin.profile.edit');
+        Route::put('/profile', [adminController::class, 'update'])->name('admin.profile.update');
         Route::delete('/admins/{user}', [adminController::class, 'destroy'])->name('admin.destroy');
 
         Route::get('/indexproduct', [productController::class, 'index'])->name('product.index');
