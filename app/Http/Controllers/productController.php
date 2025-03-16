@@ -37,32 +37,29 @@ class productController extends Controller
         
         $validated= $request->validated();
         if(request()->has('imagepath')){
+            Storage::disk('public')->delete($product->imagepath);
            $ImagePath= StoreImage('imagepath','products');
            $validated['imagepath']=$ImagePath;
+           $product->update($validated);
            
-        }
-        if(request()->has('imagepath')){
-
-            Storage::disk('public')->delete($product->imagepath);
-            $product->update($validated);
         }else{
             $product->update($validated);
         }
         return to_route('product.index');
     }
 
-    public function show($productId){
+    public function show(product $product){
 
-        $product= product::findOrFail($productId );
+       
         $categoryName=category::where("id",$product->category_id)->value('name');
         
         $relatedProducts=product::where("category_id",$product->category_id)->get();
         
         return view("singleProduct",["product"=> $product,"related"=> $relatedProducts,"category"=> $categoryName]);
     }
-    public function showForAdmin($productId){
+    public function showForAdmin(product $product){
 
-        $product= product::findOrFail($productId );
+        
         $categoryName=category::where("id",$product->category_id)->value('name');
         return view("dashboard.products.show",["product"=> $product,"categoryName"=> $categoryName]);
     }
@@ -74,10 +71,10 @@ class productController extends Controller
     }
 
 
-    public function destroy($productId){
-        $product=product::findOrFail($productId);
-        if(count(Cart::where("product_id",$productId)->get())){
-            Cart::where("product_id",$productId)->delete();
+    public function destroy(product $product){
+       
+        if(count(Cart::where("product_id",$product->id)->get())){
+            Cart::where("product_id",$product->id)->delete();
         }
         Storage::disk('public')->delete( $product->imagepath);
         $product->delete();

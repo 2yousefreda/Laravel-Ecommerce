@@ -55,21 +55,21 @@ class categoryController extends controller
         return view("category",["categories"=> $categories,"products"=> $products]);
     }
 
-    public function showforAdmin($categoryId){
-        $category= category::findOrFail($categoryId);
-        $productsCounter= count(product::where("category_id", $categoryId)->get());
+    public function showforAdmin(category $category){
+        
+        $productsCounter= count(product::where("category_id", $category->id)->get());
         return  view("dashboard.categories.show",["category"=> $category,'products'=> $productsCounter]);
 
     }
-    public function edit($categoryId){
+    public function edit(category $category){
        
-        $category=category::findOrFail($categoryId);
+        
         
         return view("dashboard.categories.edit",['category'=> $category]);
 
     }
 
-    public function update(UpdateCategoryRequest $request, $categoryId){
+    public function update(UpdateCategoryRequest $request,category $category){
        
         $validated= $request->validated();
        
@@ -81,7 +81,7 @@ class categoryController extends controller
         }
      
         
-        $category=category::findOrFail($categoryId);
+       
         if(request()->has('imagepath')){
             
             Storage::disk('public')->delete($category->imagepath);
@@ -103,18 +103,18 @@ class categoryController extends controller
         
         
     }
-    public function destroy($categoryId){
+    public function destroy(category $category){
         // dd($categoryId);
-        $category=category::findOrFail($categoryId);
-        categoryController::destroyWhere($categoryId);
+        
+        categoryController::destroyWhere($category->id);
         Storage::disk('public')->delete( $category->imagepath);
         $category->delete();
         return to_route('category.index');
     }
 
-    public function singleCategory($categoryId){
+    public function singleCategory(category $category){
 
-        $products=product::where("category_id",$categoryId)->get();
+        $products=product::where("category_id",$category->id)->get();
             
         
         return view("category",["products"=> $products,"categories"=> null]);

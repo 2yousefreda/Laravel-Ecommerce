@@ -16,8 +16,8 @@ Route::get('/about', function () {
 })->name('about');
 
 Route::get('/category', [categoryController::class, 'show'])->name('category');
-Route::get('/category/{categoryId}', [categoryController::class, 'singleCategory'])->name('category.product');
-Route::get('/product/{productId}', [productController::class, 'show'])->name('product.show');
+Route::get('/category/{category}', [categoryController::class, 'singleCategory'])->name('category.product');
+Route::get('/product/{product}', [productController::class, 'show'])->name('product.show');
 
 Route::group(['middleware' => ['auth','verified']], function () {
     Route::get('/profile', [userController::class, 'show'])->name('profile.show');
@@ -32,9 +32,9 @@ Route::group(['middleware' => ['auth','verified']], function () {
     Route::post('/addtocart/{product}', [cartController::class, 'store'])->name('cart.store');
     Route::get('/cart/destroyall', [cartController::class, 'destroyAll'])->name('cart.destroyAll');
     Route::get('/order', [orderController::class, 'indexUserOrder'])->name('user.order.index');
-    Route::delete('/cart/{productId}', [cartController::class, 'destroy'])->name('cart.destroy');
-    Route::get('/order/{orderId}', [orderController::class, 'show'])->name('user.order.show');
-    Route::delete('/order/{orderId}', [orderController::class, 'destroy'])->name('user.order.destroy');
+    Route::delete('/cart/{product}', [cartController::class, 'destroy'])->name('cart.destroy');
+    Route::get('/order/{order}', [orderController::class, 'show'])->name('user.order.show');
+    Route::delete('/order/{order}', [orderController::class, 'destroy'])->name('user.order.destroy');
 
 });
 

@@ -80,9 +80,9 @@ class cartController extends Controller
         return redirect()->back(); 
         
     }
-    public function destroy($productId)
+    public function destroy(product $product)
     {
-        $product = cart::findOrFail($productId);
+        
         $product->delete();
         return to_route('cart.index');
     }

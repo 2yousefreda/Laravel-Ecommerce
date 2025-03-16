@@ -20,12 +20,12 @@ class orderController extends Controller
         
         return view('dashboard.orders.index',['orders'=>$orders]);
     }
-    public function show($orderId){
+    public function show(order $order){
         $user=request()->user();    
         if  (Gate::denies('user.show',$user)) {
             abort(403);
         }
-        $order=Order::find($orderId);
+       
         $products = json_decode($order->cart_items);
         return view('dashboard.orders.show',['order'=>$order,'products'=>$products]);
     }
@@ -45,13 +45,13 @@ class orderController extends Controller
         return view("checkout",['orders'=>$order,'isEmpty'=>$isEmpty,'suptotal'=> $suptotal,'shipping'=>$shipping,'totalPrice'=>$totalPrice]);
     }
     
-    public function destroy($orderId){
+    public function destroy(order $order){
         
         $user=request()->user();    
         if  (Gate::denies('user.show',$user)) {
             abort(403);
         }
-        $order = Order::findOrFail($orderId);
+       
         $order->delete();
         return redirect()->back(); 
     }
