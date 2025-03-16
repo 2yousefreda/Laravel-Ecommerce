@@ -29,7 +29,7 @@ The project is ready for use, and you can start displaying and selling food prod
 ## Getting Started
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/fruitkha.git
+    git clone https://github.com/2yousefreda/fruitkha
     ```
 2. Install dependencies:
     ```bash
@@ -49,5 +49,5 @@ The project is ready for use, and you can start displaying and selling food prod
     php artisan serve
     ```
 
-For more information, please visit [project documentation](link-to-documentation).
+
 
