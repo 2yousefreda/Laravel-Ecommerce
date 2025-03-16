@@ -17,11 +17,10 @@ The main goal of the "Fruitkha" project is to provide a complete online store fo
 - **High Security**: Uses Fortify Auth to secure the login and identity verification process.
 
 ## Technologies Used
-- **Laravel**: PHP framework for building web applications.
-- **MySQL**: Database for storing data.
-- **Fortify Auth**: Security system for login processes.
-- **HTML, CSS, JS**: For front-end design.
-- **Bootstrap**: Framework for designing the user interface.
+- **Backend:** Laravel, MySQL
+- **Frontend:** HTML, CSS, JavaScript, Bootstrap (using a pre-designed template called "Fruitkha" with custom modifications)
+- **Admin Dashboard:** AdminLTE
+- **Security:** Fortify Auth
 
 ## Project Status
 The project is ready for use, and you can start displaying and selling food products through the platform.
