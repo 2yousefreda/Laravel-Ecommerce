@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\product;
 use App\Models\cart;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Numeric;
+
 
 class cartController extends Controller
 {
@@ -78,12 +77,12 @@ class cartController extends Controller
         ]);
         $cartProduct->save();
 
-        return to_route('cart.index');
-        //return back();
+        return redirect()->back(); 
+        
     }
-    public function destroy($productId)
+    public function destroy(product $product)
     {
-        $product = cart::findOrFail($productId);
+        
         $product->delete();
         return to_route('cart.index');
     }

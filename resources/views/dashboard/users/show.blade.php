@@ -23,7 +23,11 @@
       </div>
       <!-- /.card-body -->
     </div>
-    <!-- /.card -->
+    
+    
+    @can('user.Profile.edit',$user)
+    <a href="{{route('profile.edit')}}" class="btn btn-primary">Edit Profile</a>
+    @endcan
   </div>
   </div>
 @endsection

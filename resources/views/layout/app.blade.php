@@ -109,6 +109,9 @@
                                                 <li>
                                                     <a href="{{route('profile.show')}}">Profile</a>
                                                 </li>
+                                                <li>
+                                                    <a href="{{route('user.order.index')}}">My Orders</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </li>

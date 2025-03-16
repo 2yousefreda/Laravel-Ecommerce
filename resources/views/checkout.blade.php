@@ -47,7 +47,7 @@
                               </div>
                           @endif
                          
-                                <form id="orderForm" method="POST" action="{{route('order.store')}}">
+                                <form id="orderForm" method="POST" action="{{route('checkout')}}">
                                     @csrf
                                     <p><input type="text" name="name" placeholder="Name"></p>
                                     <p><input type="email" name="email" placeholder="Email"></p>

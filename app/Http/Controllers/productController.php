@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\category;
 use App\Models\product;
 use App\Models\Cart;
@@ -20,53 +22,44 @@ class productController extends Controller
         $categories=Category::all();
         return view("dashboard.products.create",["categories"=>$categories]);
     }
-    public function store(){
-        
-        request()->validate([
-            'name'=> ['required'],
-            'price'=> ['required','gt:0'],
-            'quantity'=> ['required','gt:0'],
-            'category_id'=> ['required','exists:categories,id'],
-            'imagepath'=> ['required','mimes:jpeg,jpg,png,gif'],
-        ]);
+    public function store(StoreProductRequest $request){
+         
+        $validated= $request->validated();
         if(request()->has('imagepath')){
-            $file=request()->file('imagepath');
-            $path=Storage::disk('public')->put('products',$file);
+           $ImagePath= StoreImage('imagepath','products');
+           $validated['imagepath']=$ImagePath;
         }
-        $name=request()->name;
-        $description=request()->description;
-        $price=request()->price;
-        $quantity=request()->quantity;
-        $category_id=request()->category_id;
-        $imagepath=$path;
-        
-
-        product::create([
-            'name'=> $name,
-            'price'=> $price,
-            'quantity'=> $quantity,
-            'description'=>$description,
-            'imagepath'=>$imagepath,
-            'category_id'=>$category_id,
-        ]);
-        
-        
+        product::create(  $validated);
         return to_route('product.index');
     }
 
+    public function update(UpdateProductRequest $request,product $product){
+        
+        $validated= $request->validated();
+        if(request()->has('imagepath')){
+            Storage::disk('public')->delete($product->imagepath);
+           $ImagePath= StoreImage('imagepath','products');
+           $validated['imagepath']=$ImagePath;
+           $product->update($validated);
+           
+        }else{
+            $product->update($validated);
+        }
+        return to_route('product.index');
+    }
 
-    public function show($productId){
+    public function show(product $product){
 
-        $product= product::findOrFail($productId );
+       
         $categoryName=category::where("id",$product->category_id)->value('name');
         
         $relatedProducts=product::where("category_id",$product->category_id)->get();
         
         return view("singleProduct",["product"=> $product,"related"=> $relatedProducts,"category"=> $categoryName]);
     }
-    public function showForAdmin($productId){
+    public function showForAdmin(product $product){
 
-        $product= product::findOrFail($productId );
+        
         $categoryName=category::where("id",$product->category_id)->value('name');
         return view("dashboard.products.show",["product"=> $product,"categoryName"=> $categoryName]);
     }
@@ -77,59 +70,11 @@ class productController extends Controller
 
     }
 
-    public function update( $productId){
-        
-        request()->validate([
-            'name'=> ['required'],
-            'price'=> ['required','gt:0'],
-            'quantity'=> ['required','gt:0'],
-            'category_id'=> ['required','exists:categories,id'],
-            'imagepath'=> ['mimes:jpeg,jpg,png,gif'],
-        ]);
-        $isImagePath=0;
-        $imagepath="";
-        if(request()->has('imagepath')){
-            
-            $file=request()->file('imagepath');
-            $path=Storage::disk('public')->put('products',$file);
-            $isImagePath=1;
-            $imagepath=$path;
-        }
-        $name=request()->name;
-        $description=request()->description;
-        $price=request()->price;
-        $quantity=request()->quantity;
-        $category_id=request()->category_id;
-        
-        $singleProduct=product::findOrFail($productId);
-        if($isImagePath== 1){
 
-            Storage::disk('public')->delete($singleProduct->imagepath);
-            $singleProduct->update([
-                'name'=> $name,
-                'price'=> $price,
-                'quantity'=> $quantity,
-                'description'=>$description,
-                'imagepath'=>$imagepath,
-                'category_id'=>$category_id,
-            ]);
-        }else{
-            $singleProduct->update([
-                'name'=> $name,
-                'price'=> $price,
-                'quantity'=> $quantity,
-                'description'=>$description,
-                'category_id'=>$category_id,
-            ]);
-        }
-        
-        
-        return to_route('product.index');
-    }
-    public function destroy($productId){
-        $product=product::findOrFail($productId);
-        if(count(Cart::where("product_id",$productId)->get())){
-            Cart::where("product_id",$productId)->delete();
+    public function destroy(product $product){
+       
+        if(count(Cart::where("product_id",$product->id)->get())){
+            Cart::where("product_id",$product->id)->delete();
         }
         Storage::disk('public')->delete( $product->imagepath);
         $product->delete();
@@ -137,7 +82,7 @@ class productController extends Controller
         return to_route('product.index');
     }
    
-    protected static function decreaseQuantity($productId,$quantity){
+    public static function decreaseQuantity($productId,$quantity){
 
         $product=Product::find($productId);
         $newQuantity=$product->quantity-$quantity;

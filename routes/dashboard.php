@@ -5,7 +5,7 @@ use App\Models\product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\oredrController;
+use App\Http\Controllers\orderController;
 use App\Http\Controllers\userController;
 
 route::group(
@@ -28,10 +28,12 @@ route::group(
         Route::get('/register', [adminController::class, 'create'])->name('admin.create');
         Route::post('/register', [adminController::class, 'store'])->name('admin.store');
         Route::get('/admins/{user}', [adminController::class, 'show'])->name('admin.show');
+        Route::get('/profile', [adminController::class, 'edit'])->name('admin.profile.edit');
+        Route::put('/profile', [adminController::class, 'update'])->name('admin.profile.update');
         Route::delete('/admins/{user}', [adminController::class, 'destroy'])->name('admin.destroy');
 
         Route::get('/indexproduct', [productController::class, 'index'])->name('product.index');
-        Route::get('/product/{productId}', [productController::class, 'showForAdmin'])->name('product.A_show');
+        Route::get('/product/{product}', [productController::class, 'showForAdmin'])->name('product.A_show');
         Route::get('/createproduct', [productController::class, 'create'])->name('product.create');
         Route::post('/storeproduct', [productController::class, 'store'])->name('product.store');
 
@@ -44,13 +46,14 @@ route::group(
         Route::get('/indexcategory', [categoryController::class, 'index'])->name('category.index');
         Route::get('/createcategory', [categoryController::class, 'create'])->name('category.create');
         Route::post('/storecategory', [categoryController::class, 'store'])->name('category.store');
-        Route::get('/category/{categoryId}', [categoryController::class, 'showforAdmin'])->name('category.A_show');
-        Route::get('/category/{categoryId}/edit', [categoryController::class, 'edit'])->name('category.edit');
-        Route::put('/category/{categoryId}/update', [categoryController::class, 'update'])->name('category.update');
-        Route::delete('/categorydestroy/{categoryId}', [categoryController::class, 'destroy'])->name('category.destroy');
+        Route::get('/category/{category}', [categoryController::class, 'showforAdmin'])->name('category.A_show');
+        Route::get('/category/{category}/edit', [categoryController::class, 'edit'])->name('category.edit');
+        Route::put('/category/{category}/update', [categoryController::class, 'update'])->name('category.update');
+        Route::delete('/categorydestroy/{category}', [categoryController::class, 'destroy'])->name('category.destroy');
 
-        Route::get('/indexorder', [oredrController::class, 'index'])->name('order.index');
-        Route::get('/order/{orderId}', [oredrController::class, 'show'])->name('order.show');
-        Route::delete('/order/{orderId}', [oredrController::class, 'destroy'])->name('order.destroy');
+        Route::get('/indexorder', [orderController::class, 'index'])->name('order.index');
+        
+        Route::get('/order/{order}', [orderController::class, 'show'])->name('order.show');
+        Route::delete('/order/{order}', [orderController::class, 'destroy'])->name('order.destroy');
     },
 );

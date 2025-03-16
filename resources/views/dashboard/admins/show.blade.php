@@ -19,7 +19,7 @@
           <li>Client Name: {{$user['name']}}</li>
           <li>UserName: {{$user['username']}}</li>
           <li>Email: {{$user['email']}}</li> 
-          <li>Phone: {{$user['phone']}}</li> 
+          <li>Phone: {{$user['phone_number']}}</li> 
           @can('super_admin')
           @if ($user['is_superAdmin'])
           <li>Super Admin: YES</li> 
@@ -35,6 +35,10 @@
       </div>
       <!-- /.card-body -->
     </div>
+    @can('admin.Profile.edit',$user)
+    {{-- @dd($user) --}}
+    <a href="{{route('admin.profile.edit')}}" class="btn btn-primary">Edit Profile</a>
+    @endcan
     <!-- /.card -->
   </div>
   </div>

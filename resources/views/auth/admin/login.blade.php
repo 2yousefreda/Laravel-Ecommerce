@@ -4,7 +4,16 @@
 @section('name')Login @endsection 
 @section('content') 
 
-<div class="login-box"> @if ($errors->any())
+<div class="login-box">
+  @if (session('status'))
+  <div class="alert alert-success alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <h5><i class="icon fas fa-check"></i> Alert!</h5>
+      {{ session('status') }}
+    </div>
+      
+  @endif
+   @if ($errors->any())
 <div class="alert alert-danger">
     <ul>
         @foreach ($errors->all() as $error)
@@ -49,7 +58,7 @@
         <!-- /.social-auth-links -->
   
         <p class="mb-1">
-          <a href="forgot-password.html">I forgot my password</a>
+          <a href="{{route('password.request')}}">I forgot my password</a>
         </p>
        
       </div>

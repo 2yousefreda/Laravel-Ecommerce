@@ -1,4 +1,4 @@
-@if (Auth::guard('admin')->user())
+
   
 
 @php
@@ -115,4 +115,3 @@ $userid=Auth::guard('admin')->User()->id;
     </div>
     <!-- /.sidebar -->
   </aside>
-  @endif

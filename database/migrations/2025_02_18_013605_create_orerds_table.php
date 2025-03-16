@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->json('cart_items');
             $table->integer('shipping');
-            $table->integer('total_price');
+            $table->integer('total_price')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
