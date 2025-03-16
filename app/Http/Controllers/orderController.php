@@ -21,6 +21,7 @@ class orderController extends Controller
         return view('dashboard.orders.index',['orders'=>$orders]);
     }
     public function show(order $order){
+        dd($order); 
         $user=request()->user();    
         if  (Gate::denies('user.show',$user)) {
             abort(403);

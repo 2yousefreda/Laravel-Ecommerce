@@ -28,7 +28,7 @@ class checkoutStripeRequest extends FormRequest
             'address'=> ['required'],
             'phone'=> ['required'],
             'shipping'=> ['required'],
-            'totalPrice'=> ['gt:0','nullable'],
+            'total_price'=> ['gt:0'],
             
         
         ];

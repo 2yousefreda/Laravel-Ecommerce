@@ -55,7 +55,8 @@
                                     <p><input type="tel" name="phone" placeholder="Phone"></p>
                                     <p><textarea name="description"  cols="30" rows="10" placeholder="Say Something"></textarea></p>
                                     <input type="hidden" name="shipping" value="{{$shipping}}">
-                                    <input type="hidden" name="totalPrice" value="{{$totalPrice}}">
+      
+                                    <input type="hidden" name="total_price" value="{{$totalPrice}}">
                                     
                                 </form>
                             </div>
