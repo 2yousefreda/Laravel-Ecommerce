@@ -25,8 +25,9 @@ class productController extends Controller
     public function store(StoreProductRequest $request){
          
         $validated= $request->validated();
+        
         if(request()->has('imagepath')){
-           $ImagePath= StoreImage('imagepath','products');
+           $ImagePath= StoreImage($validated['imagepath'],'products');
            $validated['imagepath']=$ImagePath;
         }
         product::create(  $validated);
@@ -38,7 +39,7 @@ class productController extends Controller
         $validated= $request->validated();
         if(request()->has('imagepath')){
             Storage::disk('public')->delete($product->imagepath);
-           $ImagePath= StoreImage('imagepath','products');
+           $ImagePath= StoreImage($validated['imagepath'],'products');
            $validated['imagepath']=$ImagePath;
            $product->update($validated);
            

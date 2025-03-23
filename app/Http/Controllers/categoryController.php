@@ -33,7 +33,7 @@ class categoryController extends controller
        $validated= $request->validated();
         
         if($request->has('imagepath')){
-            $ImagePath=StoreImage('imagepath','categories');
+            $ImagePath=StoreImage($validated['imagepath'],'categories');
             $validated['imagepath']=$ImagePath;
         }
         
@@ -75,7 +75,7 @@ class categoryController extends controller
        
         if(request()->has('imagepath')){
             
-            $ImagePath=StoreImage('imagepath','categories');
+            $ImagePath=StoreImage($validated['imagepath'],'categories');
             $validated['imagepath']=$ImagePath;
         
         }

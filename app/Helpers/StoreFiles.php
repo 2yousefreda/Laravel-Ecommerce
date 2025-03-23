@@ -1,8 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Storage;
 function StoreImage($ImagePath,$Folder): string{
-    $file=request()->file($ImagePath);
-    $path=Storage::disk('public')->put($Folder,$file);
+    $path=Storage::disk('public')->put($Folder,$ImagePath);
     return $path;
 }
 
