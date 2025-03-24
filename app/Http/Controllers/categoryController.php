@@ -104,7 +104,7 @@ class categoryController extends controller
         
     }
     public function destroy(category $category){
-        // dd($categoryId);
+       
         
         categoryController::destroyWhere($category->id);
         Storage::disk('public')->delete( $category->imagepath);

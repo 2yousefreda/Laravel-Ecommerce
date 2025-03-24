@@ -46,7 +46,7 @@ class adminController extends Controller
        return view('auth.admin.register');
     }
     public function store(StoreAdminRequest $request){
-        // dd($request->validated());
+      
         if  (Gate::denies('super_admin')) {
             abort(403);
         }
@@ -72,7 +72,7 @@ class adminController extends Controller
             abort(403);
         }
         $user=request()->user();
-        // dd($user);
+        
         $valedated = $request->validated();
         if (empty($valedated['name'])) {
            $valedated['name']= $user->name; ; 
