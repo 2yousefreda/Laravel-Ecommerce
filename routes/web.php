@@ -19,7 +19,7 @@ Route::get('/category', [categoryController::class, 'show'])->name('category');
 Route::get('/category/{category}', [categoryController::class, 'singleCategory'])->name('category.product');
 Route::get('/product/{product}', [productController::class, 'show'])->name('product.show');
 
-Route::group(['middleware' => ['auth','verified']], function () {
+Route::group(['middleware' => ['auth',]], function () {
     Route::get('/profile', [userController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [userController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [userController::class, 'Update'])->name('profile.update');
