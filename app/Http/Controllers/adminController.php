@@ -95,6 +95,10 @@ class adminController extends Controller
         if  (Gate::denies('super_admin')) {
             abort(403);
         }
+        if($user->id==1||$user->id==2){ 
+            
+            return redirect()->back()->with('error','you can\'t delete this user');
+        }
         $user->delete();
         return redirect()->back()->with('success','User Deleted successfuly');
     }

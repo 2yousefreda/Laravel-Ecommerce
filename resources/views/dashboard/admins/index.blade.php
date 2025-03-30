@@ -7,6 +7,22 @@
 @endsection
 @section('location') Admins{{count($users)}} @endsection
 @section('content')
+@if (session('success'))
+<div class="alert alert-success alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-check"></i> Alert!</h5>
+    {{session('success')}}
+  </div>
+    
+@endif
+@if (session('error'))
+<div class="alert alert-danger alert-dismissible">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <h5><i class="icon fas fa-check"></i> Alert!</h5>
+    {{session('error')}}
+  </div>
+    
+@endif
     <div class="create_section"
         style="width: 100%; height: 100px; display: flex; align-items: center; justify-content: center;">
         
