@@ -12,7 +12,7 @@ use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Storage;
 
 
-class categoryController extends controller
+class categoryController  
 {
     public function index(){
        $categories= category::all();

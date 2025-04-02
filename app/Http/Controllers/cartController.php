@@ -7,7 +7,7 @@ use App\Models\cart;
 use Illuminate\Support\Facades\Validator;
 
 
-class cartController extends Controller
+class cartController  
 {
     public function index()
     {

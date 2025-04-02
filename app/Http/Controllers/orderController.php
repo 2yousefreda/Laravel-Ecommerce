@@ -11,7 +11,7 @@ use App\Http\Requests\CreateOrderRequest;
 
 
 
-class orderController extends Controller
+class orderController  
 {
   
    

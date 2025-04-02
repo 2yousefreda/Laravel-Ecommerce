@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminProfileRequest;
-class adminController extends Controller
+class adminController 
 {
 
     public function index(){
