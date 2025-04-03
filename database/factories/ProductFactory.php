@@ -18,12 +18,12 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>'Berry',
+            'name'=>'pizza',
             'description'=>$this->faker->text(100),
             'price'=>$this->faker->numberBetween(5,10),
             'quantity'=> $this->faker->numberBetween(5,10),
-            'imagepath'=> 'products\4dhOm4o1CMl5JoSNlH0E9BtTjkN5kJhpzeXucvwe.jpg',
-            'category_id'=> 2
+            'imagepath'=> 'products/32ln6YBtKwaVaswE6YEbms78877Y8dQ1xGSmPRVk.jpg',
+            'category_id'=> 4
         ];
     }
 }
