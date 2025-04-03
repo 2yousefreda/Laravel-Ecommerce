@@ -7,7 +7,7 @@ use App\Models\order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Requests\checkoutStripeRequest;
-class StripeController  
+class StripeController extends Controller
 {
     public function checkout(checkoutStripeRequest $request){
    $valedated = $request->validated();
