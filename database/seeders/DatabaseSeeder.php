@@ -16,11 +16,11 @@ class DatabaseSeeder extends Seeder
         // \App\Models\product::factory(20)->create();
         for ($i = 0; $i < 20; $i++) {
             \App\Models\product::create([
-                'name'=>'pizza',
+                'name'=>'mago',
                 'price'=>10,
                 'quantity'=> 5,
-                'imagepath'=> 'products/32ln6YBtKwaVaswE6YEbms78877Y8dQ1xGSmPRVk.jpg',
-                'category_id'=> 4
+                'imagepath'=> 'products/b5sYRI2CwDwyOI2GkPlAoGJdXrPMn5K4UynfMTuT.jpg',
+                'category_id'=> 5
             ]);
         }
         // User::factory(10)->create();
