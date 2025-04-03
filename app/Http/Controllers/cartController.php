@@ -49,7 +49,7 @@ class cartController
             'quantity' => ['required', 'integer', 'gt:0'],
         ]);
 
-        $cartProduct = cart::where('product_id', $product->id)
+        $cartProduct = cart::where('product_Id', $product->id)
             ->where('user_id', request()->user()->id)
             ->firstOrNew([
                 'user_id' => request()->user()->id,
