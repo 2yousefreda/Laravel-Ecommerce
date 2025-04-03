@@ -4,7 +4,7 @@ use App\Models\order;
 use App\Models\product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\productController;
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\categoryController;
 use App\Http\Controllers\orderController;
 use App\Http\Controllers\userController;
 
