@@ -30,7 +30,7 @@ class CreateNewUser implements CreatesNewUsers
                 'email',
                 'max:255',
                 Rule::unique(User::class),
-                Rule::unique(Admin::class),
+                Rule::unique(admin::class),
             ],
             'password' => $this->passwordRules(),
         ])->validate();

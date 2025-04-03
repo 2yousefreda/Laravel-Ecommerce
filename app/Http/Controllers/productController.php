@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Framework\Attributes\RequiresSetting;
 
-class productController extends Controller
+class productController  
 {
     public function index(){
         $result= product::all();

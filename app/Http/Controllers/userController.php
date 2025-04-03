@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUserProfileRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-class userController extends Controller
+class userController  
 {
     public function index(){
         if  (Gate::denies('super_admin')) {
